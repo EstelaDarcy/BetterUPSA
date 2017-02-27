@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.upsa.better.ear.ejbs;
+package es.upsa.better.ear.beans;
 
 /**
  *
  * @author cxb0105
  */
-public interface DAO 
+public class CeldaHorario 
 {
-    public void selectHorario();
+    
 }

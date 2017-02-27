@@ -7,8 +7,10 @@ package es.upsa.better.ear.beans;
 
 /**
  *
- * @author cxb0105
+ * @author Estela
  */
-public class CeldaHorario {
+public class Profesor extends Usuario
+{
+    private String email;
     
 }

@@ -9,7 +9,12 @@ package es.upsa.better.ear.ejbs;
  *
  * @author cxb0105
  */
-public class DAOBean 
+public class DAOBean implements DAO
 {
+    @Override
+    public void selectHorario()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
