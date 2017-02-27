@@ -107,6 +107,7 @@ fechaNueva DATE,
 horaNueva NUMBER(2,2),
 tipo VARCHAR(20),
 idAula VARCHAR(9),
+idAsig VARCHAR(9),
 
 CONSTRAINT "FK_AULA_CAMBIOSH" FOREIGN KEY (idAula)
                                 REFERENCES aulas(idAula)
@@ -152,6 +153,7 @@ create table cambiost
 idT VARCHAR(9),
 horaNuevaT NUMBER(2,2),
 diaNuevoT VARCHAR(20),
+tipo VARCHAR(10),
 
 CONSTRAINT "FK_TUTORIAS_CAMBIOST" FOREIGN KEY (idT)
                                 REFERENCES tutorias(idT)
