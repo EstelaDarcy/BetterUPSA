@@ -11,5 +11,58 @@ package es.upsa.better.ear.beans;
  */
 public class CeldaHorario 
 {
-    
+    private String nombreAsignatura;
+    private double hora;
+    private String modificacion;
+    private String nombreProf;
+    private String nombreAula;
+    private String edificio;
+
+    public String getNombreAsignatura() {
+        return nombreAsignatura;
+    }
+
+    public void setNombreAsignatura(String nombreAsignatura) {
+        this.nombreAsignatura = nombreAsignatura;
+    }
+
+    public double getHora() {
+        return hora;
+    }
+
+    public void setHora(double hora) {
+        this.hora = hora;
+    }
+
+    public String getModificacion() {
+        return modificacion;
+    }
+
+    public void setModificacion(String modificacion) {
+        this.modificacion = modificacion;
+    }
+
+    public String getNombreProf() {
+        return nombreProf;
+    }
+
+    public void setNombreProf(String nombreProf) {
+        this.nombreProf = nombreProf;
+    }
+
+    public String getNombreAula() {
+        return nombreAula;
+    }
+
+    public void setNombreAula(String nombreAula) {
+        this.nombreAula = nombreAula;
+    }
+
+    public String getEdificio() {
+        return edificio;
+    }
+
+    public void setEdificio(String edificio) {
+        this.edificio = edificio;
+    }    
 }

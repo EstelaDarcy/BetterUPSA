@@ -5,6 +5,12 @@
  */
 package es.upsa.better.ear.ejbs;
 
+import es.upsa.better.ear.beans.CeldaHorario;
+import es.upsa.better.ear.beans.Usuario;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  *
  * @author cxb0105
@@ -12,9 +18,11 @@ package es.upsa.better.ear.ejbs;
 public class DAOBean implements DAO
 {
     @Override
-    public void selectHorario()
+    public void selectHorario(Usuario usuario, Date currentFecha) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Collection<CeldaHorario> clases = new ArrayList();
+        
     }
+    
     
 }
