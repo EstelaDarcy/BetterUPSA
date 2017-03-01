@@ -17,6 +17,15 @@ public class CeldaHorario
     private String nombreProf;
     private String nombreAula;
     private String edificio;
+    private boolean examen;
+
+    public boolean isExamen() {
+        return examen;
+    }
+
+    public void setExamen(boolean examen) {
+        this.examen = examen;
+    }
 
     public String getNombreAsignatura() {
         return nombreAsignatura;
