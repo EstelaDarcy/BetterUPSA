@@ -5,17 +5,37 @@
  */
 package es.upsa.better.ear.beans;
 
+import java.util.HashMap;
+
 /**
  *
  * @author cxb0105
  */
 public class CeldaHorario 
 {
+    private String idAsig;
     private String nombreAsignatura;
     private double hora;
     private String modificacion;
-    private String nombreProf;
+    private HashMap<String, Profesor> nombreProf;
     private String nombreAula;
+    private String tipo;
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public HashMap<String, Profesor> getNombreProf() {
+        return nombreProf;
+    }
+
+    public void setNombreProf(HashMap<String, Profesor> nombreProf) {
+        this.nombreProf = nombreProf;
+    }
     private String edificio;
     private boolean examen;
 
@@ -47,16 +67,16 @@ public class CeldaHorario
         return modificacion;
     }
 
+    public String getIdAsig() {
+        return idAsig;
+    }
+
+    public void setIdAsig(String idAsig) {
+        this.idAsig = idAsig;
+    }
+    
     public void setModificacion(String modificacion) {
         this.modificacion = modificacion;
-    }
-
-    public String getNombreProf() {
-        return nombreProf;
-    }
-
-    public void setNombreProf(String nombreProf) {
-        this.nombreProf = nombreProf;
     }
 
     public String getNombreAula() {
