@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -42,7 +43,7 @@ public class DAOBean implements DAO
         Collection<CeldaHorario> clases = new ArrayList();
         String dia = getDayOfTheWeek(currentFecha);
         ArrayList<String> asignaturas = new ArrayList();
-        HashMap<String, Asignatura> asigSemestre = new HashMap();
+        ArrayList<Asignatura> asigSemestre = new ArrayList();
         String idSemetre;
         
         try(Connection connection = dataSource.getConnection();
@@ -57,7 +58,13 @@ public class DAOBean implements DAO
             /*selecciono asignaturas matriculadas en ese semestre*/    
             PreparedStatement psSeAsig = connection.prepareStatement("SELECT NOMBREASIGNATURA, IDASIG"
                                                                   + "   FROM ASIGNATURAS"
-                                                                  + "  WHERE IDASIG=? AND IDSEMESTRE=?")  
+                                                                  + "  WHERE IDASIG=? AND IDSEMESTRE=?");
+                
+            /*obtengo dato de la celda del horario del examen*/
+            PreparedStatement psSExam = connection.prepareStatement("SELECT IDAULA, HORA, TIPO "
+                                                                  + "  FROM EXAMENES"
+                                                                  + " WHERE IDASIG=? AND FECHA=?")
+            
             )
                                                  
         {           
@@ -77,7 +84,7 @@ public class DAOBean implements DAO
             if ( rs1.next() )
             {                
                 do
-                {
+                {   //Compruebo que no estemos de vacaciones
                     if(currentFecha.compareTo(rs1.getDate(2))>=0 && currentFecha.compareTo(rs1.getDate(5))<=0)
                     {
                         idSemetre = rs1.getString(1);
@@ -93,7 +100,7 @@ public class DAOBean implements DAO
                             {
                                 if(rsAsig.next())
                                 {
-                                    asigSemestre.put(rsAsig.getString(2), new Asignatura(rsAsig.getString(2), rsAsig.getString(1)));
+                                    asigSemestre.add(new Asignatura(rsAsig.getString(2), rsAsig.getString(1)));
                                 }//ya tengo todas las asignaturas de este cuatrimestre
                             }
                         }
@@ -104,11 +111,14 @@ public class DAOBean implements DAO
                         }
                         //O BUSCAR EN EXAMENES
                         if(currentFecha.compareTo(rs1.getDate(4))>=0 && currentFecha.compareTo(rs1.getDate(5))<=0)
-                        {      //me kede aki                  
-//                            while(asigSemestre.)
-//                            {
-//                                
-//                            }
+                        {                    
+                            for(Asignatura asig :asigSemestre )
+                            {
+                               psSExam.clearParameters();
+                               psSExam.setString(1, asig.getIdAsig());
+                               psSExam.setString(2, dia);
+                               //no avance
+                            }
                         }
                     }
                 }while(rs1.next());
