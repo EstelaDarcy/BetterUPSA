@@ -40,11 +40,13 @@ public class DAOBean implements DAO
     @Override
     public void selectHorario(Usuario usuario, Date currentFecha) 
     {
-        Collection<CeldaHorario> clases = new ArrayList();
+        HashMap<String, CeldaHorario> clases = new HashMap();
         String dia = getDayOfTheWeek(currentFecha);
         ArrayList<String> asignaturas = new ArrayList();
         ArrayList<Asignatura> asigSemestre = new ArrayList();
         String idSemetre;
+        boolean examenes=false;
+        String idAula;
         
         try(Connection connection = dataSource.getConnection();
             Statement stSelect = connection.createStatement();         
@@ -80,11 +82,12 @@ public class DAOBean implements DAO
                     }while(rs2.next());
                 }
             }
-                        
+             
+            /*obtengo los datos de este semestre*/
             if ( rs1.next() )
             {                
                 do
-                {   //Compruebo que no estemos de vacaciones
+                {   //Compruebo en que semestre estamos
                     if(currentFecha.compareTo(rs1.getDate(2))>=0 && currentFecha.compareTo(rs1.getDate(5))<=0)
                     {
                         idSemetre = rs1.getString(1);
@@ -99,7 +102,7 @@ public class DAOBean implements DAO
                             try(ResultSet rsAsig = psSeAsig.executeQuery())
                             {
                                 if(rsAsig.next())
-                                {
+                                {/*obtengo las asignaturas en las que esta matriculado este semestre*/
                                     asigSemestre.add(new Asignatura(rsAsig.getString(2), rsAsig.getString(1)));
                                 }//ya tengo todas las asignaturas de este cuatrimestre
                             }
@@ -108,20 +111,42 @@ public class DAOBean implements DAO
                         //Compruebo si debo buscar en el horario
                         if(currentFecha.compareTo(rs1.getDate(2))>=0 && currentFecha.compareTo(rs1.getDate(3))<=0)
                         {/* x>0 despues, x=0 eq, x<0 antes*/
+                            examenes = false;
                         }
                         //O BUSCAR EN EXAMENES
-                        if(currentFecha.compareTo(rs1.getDate(4))>=0 && currentFecha.compareTo(rs1.getDate(5))<=0)
-                        {                    
-                            for(Asignatura asig :asigSemestre )
-                            {
-                               psSExam.clearParameters();
-                               psSExam.setString(1, asig.getIdAsig());
-                               psSExam.setString(2, dia);
-                               //no avance
-                            }
+                        else if(currentFecha.compareTo(rs1.getDate(4))>=0 && currentFecha.compareTo(rs1.getDate(5))<=0)
+                        {
+                            examenes = true;                            
                         }
                     }
                 }while(rs1.next());
+                
+                if(examenes==true)
+                {
+                    /*OBTENGO LOS EXAMENES/ASIGNATURAS DEL DIA*/
+                    for(Asignatura asig :asigSemestre )
+                    {
+                       psSExam.clearParameters();
+                       psSExam.setString(1, asig.getIdAsig());
+                       psSExam.setString(2, dia);
+                       
+                       try(ResultSet rsDia = psSExam.executeQuery())
+                       {
+                           if(rsDia.next())
+                           {
+                               CeldaHorario celda = new CeldaHorario();
+                               
+                               idAula = rsDia.getString(1);
+                               celda.setHora(rsDia.getDouble(2));
+                               celda.setTipoAsig(rsDia.getString(rsDia.getString(3)));
+                               
+                               //Hay que sacar los datos del aula
+                           }
+                       }
+                       //obtener profesres con el id asignatura
+                       //coger del mapa la celda k me interesa
+                    }
+                }                
             }
         } catch (SQLException sqlException) 
         {

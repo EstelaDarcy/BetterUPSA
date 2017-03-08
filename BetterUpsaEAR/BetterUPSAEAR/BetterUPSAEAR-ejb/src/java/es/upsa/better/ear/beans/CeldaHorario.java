@@ -19,16 +19,25 @@ public class CeldaHorario
     private String modificacion;
     private HashMap<String, Profesor> nombreProf;
     private String nombreAula;
-    private String tipo;
+    private String tipoAsig;
+    private String tipoAula;
 
-    public String getTipo() {
-        return tipo;
+    public String getTipoAsig() {
+        return tipoAsig;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipoAsig(String tipoAsig) {
+        this.tipoAsig = tipoAsig;
     }
 
+    public String getTipoAula() {
+        return tipoAula;
+    }
+
+    public void setTipoAula(String tipoAula) {
+        this.tipoAula = tipoAula;
+    }
+    
     public HashMap<String, Profesor> getNombreProf() {
         return nombreProf;
     }
