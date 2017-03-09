@@ -12,16 +12,15 @@ import java.util.HashMap;
  * @author cxb0105
  */
 public class CeldaHorario 
-{
-    private String idAsig;
+{    
     private String nombreAsignatura;
     private double hora;
     private String modificacion;
-    private HashMap<String, Profesor> nombreProf;
+    private Profesor profesor;
     private String nombreAula;
     private String tipoAsig;
-    private String tipoAula;
-
+    private String edificio;
+        
     public String getTipoAsig() {
         return tipoAsig;
     }
@@ -30,32 +29,14 @@ public class CeldaHorario
         this.tipoAsig = tipoAsig;
     }
 
-    public String getTipoAula() {
-        return tipoAula;
+    public Profesor getProfesor() {
+        return profesor;
     }
 
-    public void setTipoAula(String tipoAula) {
-        this.tipoAula = tipoAula;
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
     }
     
-    public HashMap<String, Profesor> getNombreProf() {
-        return nombreProf;
-    }
-
-    public void setNombreProf(HashMap<String, Profesor> nombreProf) {
-        this.nombreProf = nombreProf;
-    }
-    private String edificio;
-    private boolean examen;
-
-    public boolean isExamen() {
-        return examen;
-    }
-
-    public void setExamen(boolean examen) {
-        this.examen = examen;
-    }
-
     public String getNombreAsignatura() {
         return nombreAsignatura;
     }
@@ -74,14 +55,6 @@ public class CeldaHorario
 
     public String getModificacion() {
         return modificacion;
-    }
-
-    public String getIdAsig() {
-        return idAsig;
-    }
-
-    public void setIdAsig(String idAsig) {
-        this.idAsig = idAsig;
     }
     
     public void setModificacion(String modificacion) {
