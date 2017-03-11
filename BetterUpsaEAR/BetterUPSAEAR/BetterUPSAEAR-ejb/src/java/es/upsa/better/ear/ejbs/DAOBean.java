@@ -157,7 +157,10 @@ public class DAOBean implements DAO
                                 celda.setModificacion("");
                             }
                         }
-                    }else{/*ES HORARIO NORMAL*/ //hay que hacer un while y obtener idAula                        
+                    }else{/*ES HORARIO NORMAL*/ //hay que hacer un while y obtener idAula                
+                        /*-----------------------------------------------------------*/
+                                    /*---------REVISAR-----------*/
+                        /*-----------------------------------------------------------*/
                         psHorario.clearParameters();
                         psHorario.setDate(1, currentFecha);
                         psHorario.setString(2, asig.getIdAsig());
