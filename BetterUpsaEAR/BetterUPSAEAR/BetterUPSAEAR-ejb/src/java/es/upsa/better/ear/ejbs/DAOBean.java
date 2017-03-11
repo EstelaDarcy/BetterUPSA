@@ -84,7 +84,15 @@ public class DAOBean implements DAO
             /*obtengo los nombres de los profesores*/
             PreparedStatement psProf = connection.prepareStatement("SELECT NOMBREPROF, APELLIDOSPROF, EMAIL "
                                                                  + "  FROM PROFESORES "
-                                                                 + " WHERE IDPROF=?")
+                                                                 + " WHERE IDPROF=?");
+                
+            /*selecciono las clases del dia*/
+            PreparedStatement psHorario = connection.prepareStatement("SELECT HORA, TIPO, IDAULA "
+                                                                    + "  FROM HORARIOS "
+                                                                    + " WHERE DIA=? AND IDASIG=?");
+            
+            /*Compruebo si hay cambios en esa hora*/
+            PreparedStatement psCambioH = connection.prepareStatement("");
             )
                                                  
         {           
@@ -166,6 +174,7 @@ public class DAOBean implements DAO
                     }else{/*ES HORARIO NORMAL*/ //hay que hacer un while y obtener idAula
                         idAula=null;
                         //seguir aqui
+                        
                     }
                     //Hay que sacar los datos del aula
                     psAula.setString(1, idAula);
@@ -184,7 +193,7 @@ public class DAOBean implements DAO
                     {
                         if(rsImpartida.next())
                         {
-                            do{                                                                                                 /* x>0 despues, x=0 eq, x<0 antes*/
+                            do{ /*Compruebo si es teoria o practica o si es una asignatura a medias*/                                                                                                /* x>0 despues, x=0 eq, x<0 antes*/
                                 if(celda.getTipoAsig().equals(rsImpartida.getString(2)) || (currentFecha.compareTo(rsImpartida.getDate(3))>=0 && currentFecha.compareTo(rsImpartida.getDate(4))<=0))
                                 {
                                     idProf = rsImpartida.getString(1);

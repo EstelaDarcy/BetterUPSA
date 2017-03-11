@@ -109,6 +109,8 @@ tipo VARCHAR(20),
 idAula VARCHAR(9),
 idAsig VARCHAR(9),
 
+CONSTRAINT "FK_ASIGNATURA_CAMBIOSH" FOREIGN KEY (idAsig)
+                                REFERENCES asignaturas(idAsig),
 CONSTRAINT "FK_AULA_CAMBIOSH" FOREIGN KEY (idAula)
                                 REFERENCES aulas(idAula)
 );
