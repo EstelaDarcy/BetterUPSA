@@ -16,10 +16,17 @@ public class CeldaHorario
     private String nombreAsignatura;
     private double hora;
     private String modificacion;
-    private Profesor profesor;
-    private String nombreAula;
-    private String tipoAsig;
-    private String edificio;
+    private Profesor profesor;    
+    private String tipoAsig;    
+    private Aula infoAula;
+
+    public Aula getInfoAula() {
+        return infoAula;
+    }
+
+    public void setInfoAula(Aula infoAula) {
+        this.infoAula = infoAula;
+    }
         
     public String getTipoAsig() {
         return tipoAsig;
@@ -59,21 +66,5 @@ public class CeldaHorario
     
     public void setModificacion(String modificacion) {
         this.modificacion = modificacion;
-    }
-
-    public String getNombreAula() {
-        return nombreAula;
-    }
-
-    public void setNombreAula(String nombreAula) {
-        this.nombreAula = nombreAula;
-    }
-
-    public String getEdificio() {
-        return edificio;
-    }
-
-    public void setEdificio(String edificio) {
-        this.edificio = edificio;
     }    
 }

@@ -52,7 +52,7 @@ idAsig VARCHAR(9),
 fechaExam DATE,
 horaExam NUMBER(2,2),
 idAula VARCHAR(9),
-tipo VARCHAR(20),
+teoria VARCHAR(20),
 constraint "PK_EXAMENES" primary key (idExam),
 CONSTRAINT "FK_ASIGNATURA_EXAMENES" FOREIGN KEY (idAsig)
                                 REFERENCES asignaturas(idAsig)
@@ -91,7 +91,7 @@ create table horarios
 (
 dia DATE,
 hora NUMBER(2,2),
-tipo VARCHAR(20),
+teoria VARCHAR(20),
 idAsig VARCHAR(9),
 idAula VARCHAR(9),
 
@@ -108,6 +108,7 @@ horaNueva NUMBER(2,2),
 tipo VARCHAR(20),
 idAula VARCHAR(9),
 idAsig VARCHAR(9),
+teoria VARCHAR(20),
 
 CONSTRAINT "FK_ASIGNATURA_CAMBIOSH" FOREIGN KEY (idAsig)
                                 REFERENCES asignaturas(idAsig),

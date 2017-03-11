@@ -6,6 +6,7 @@
 package es.upsa.better.ear.ejbs;
 
 import es.upsa.better.ear.beans.Asignatura;
+import es.upsa.better.ear.beans.Aula;
 import es.upsa.better.ear.beans.CeldaHorario;
 import es.upsa.better.ear.beans.Profesor;
 import es.upsa.better.ear.beans.Usuario;
@@ -49,9 +50,7 @@ public class DAOBean implements DAO
         boolean examenes=false;
         String idAula="";
         String idAsig;
-        String idProf;
-        String teoria;
-        
+                
         try(Connection connection = dataSource.getConnection();
             Statement stSelect = connection.createStatement();         
             /*para obtener en que semestre estamos*/
@@ -64,35 +63,20 @@ public class DAOBean implements DAO
             /*selecciono asignaturas matriculadas en ese semestre*/    
             PreparedStatement psSeAsig = connection.prepareStatement("SELECT NOMBREASIGNATURA, IDASIG"
                                                                   + "   FROM ASIGNATURAS"
-                                                                  + "  WHERE IDASIG=? AND IDSEMESTRE=?");
-                
+                                                                  + "  WHERE IDASIG=? AND IDSEMESTRE=?");                
+       /*----------------------------------------------------------------------------------------------------------------*/         
             /*obtengo datos de la celda del horario del examen*/
             PreparedStatement psSExam = connection.prepareStatement("SELECT IDAULA, HORA, TIPO "
                                                                   + "  FROM EXAMENES "
-                                                                  + " WHERE IDASIG=? AND FECHA=?");
-            
-            /*obtengo los datos de aula a mostrar*/ 
-            PreparedStatement psAula = connection.prepareStatement("SELECT NOMBREAU, EDIFICIO "
-                                                                 + "  FROM AULAS "
-                                                                 + " WHERE IDAULA=?");
-                
-            /*obtengo los id de profesores*/
-            PreparedStatement psImpartidas = connection.prepareStatement("SELECT IDPROF, TEORIA, FECHAINI, FECHAFIN "
-                                                                       + "  FROM IMPARTIDAS "
-                                                                       + " WHERE IDASIG=?");
-            
-            /*obtengo los nombres de los profesores*/
-            PreparedStatement psProf = connection.prepareStatement("SELECT NOMBREPROF, APELLIDOSPROF, EMAIL "
-                                                                 + "  FROM PROFESORES "
-                                                                 + " WHERE IDPROF=?");
-                
+                                                                  + " WHERE IDASIG=? AND FECHA=?");                 
             /*selecciono las clases del dia*/
             PreparedStatement psHorario = connection.prepareStatement("SELECT HORA, TIPO, IDAULA "
                                                                     + "  FROM HORARIOS "
-                                                                    + " WHERE DIA=? AND IDASIG=?");
-            
+                                                                    + " WHERE DIA=? AND IDASIG=?");            
             /*Compruebo si hay cambios en esa hora*/
-            PreparedStatement psCambioH = connection.prepareStatement("");
+            PreparedStatement psCambioH = connection.prepareStatement("SELECT HORANUEVA, TIPO, IDAULA "
+                                                                    + "  FROM CAMBIOSHORA "
+                                                                    + " WHERE FECHANUEVA=? AND IDASIG=?");
             )
                                                  
         {           
@@ -147,6 +131,8 @@ public class DAOBean implements DAO
                     }
                 }while(rs1.next());
                 
+    /*-----------------------------------------------------------------------------------------------------------------*/            
+    
                 /*OBTENGO LOS DATOS DE LAS CELDAS DEL DIA*/
                 for(Asignatura asig :asigSemestre )
                 {
@@ -171,51 +157,34 @@ public class DAOBean implements DAO
                                 celda.setModificacion("");
                             }
                         }
-                    }else{/*ES HORARIO NORMAL*/ //hay que hacer un while y obtener idAula
-                        idAula=null;
-                        //seguir aqui
+                    }else{/*ES HORARIO NORMAL*/ //hay que hacer un while y obtener idAula                        
+                        psHorario.clearParameters();
+                        psHorario.setDate(1, currentFecha);
+                        psHorario.setString(2, asig.getIdAsig());
                         
-                    }
-                    //Hay que sacar los datos del aula
-                    psAula.setString(1, idAula);
-                    try(ResultSet rsAula = psAula.executeQuery())
-                    {
-                        if(rsAula.next())
+                        try(ResultSet rsHorario = psHorario.executeQuery())
                         {
-                            celda.setNombreAula(rsAula.getString(1));
-                            celda.setEdificio(rsAula.getString(2));
+                            if(rsHorario.next())
+                            {
+                                do
+                                {
+                                    celda.setHora(rsHorario.getDouble(1));
+                                    celda.setTipoAsig(rsHorario.getString(2));
+                                    idAula=rsHorario.getString(3);
+                                    
+                                }while(rsHorario.next());
+                            }
                         }
                     }
                     
+                    //Hay que sacar los datos del aula                    
+                    Aula aula = getInfoAula(idAula, connection);
+                    celda.setInfoAula(aula);
+                                        
                     //obtener id prof con id asignatura
-                    psImpartidas.setString(1, idAsig);
-                    try(ResultSet rsImpartida = psImpartidas.executeQuery())
-                    {
-                        if(rsImpartida.next())
-                        {
-                            do{ /*Compruebo si es teoria o practica o si es una asignatura a medias*/                                                                                                /* x>0 despues, x=0 eq, x<0 antes*/
-                                if(celda.getTipoAsig().equals(rsImpartida.getString(2)) || (currentFecha.compareTo(rsImpartida.getDate(3))>=0 && currentFecha.compareTo(rsImpartida.getDate(4))<=0))
-                                {
-                                    idProf = rsImpartida.getString(1);
-                                    
-                                    //obtener profesores con el id prof
-                                    psProf.setString(1, idProf);
-                                    try(ResultSet rsProf = psProf.executeQuery())
-                                    {
-                                        if(rsProf.next())
-                                        {
-                                            Profesor profesor = new Profesor();
-                                            profesor.setNombre(rsProf.getString(1));
-                                            profesor.setApellidos(rsProf.getString(2));
-                                            profesor.setEmail(rsProf.getString(3));
-                                            
-                                            celda.setProfesor(profesor);
-                                        }                                        
-                                    }
-                                }
-                            }while(rsImpartida.next());
-                        }
-                    } 
+                    Profesor profesor = getInfoProf(idAsig, connection, currentFecha, celda.getTipoAsig());
+                    celda.setProfesor(profesor);
+                                        
                     clases.add(celda);
                 } 
             }
@@ -253,5 +222,75 @@ public class DAOBean implements DAO
                 diaSemana = "error";
         }
         return diaSemana;
+    }
+    
+    public Aula getInfoAula(String idAula, Connection connection) throws SQLException
+    {
+        Aula aula = new Aula();
+        
+        /*obtengo los datos de aula a mostrar*/ 
+        try(PreparedStatement psAula = connection.prepareStatement("SELECT NOMBREAU, EDIFICIO "
+                                                                 + "  FROM AULAS "
+                                                                 + " WHERE IDAULA=?")    
+           )
+        {
+            psAula.setString(1, idAula);
+            try(ResultSet rsAula = psAula.executeQuery())
+            {
+                if(rsAula.next())
+                {
+                    aula.setNombreAula(rsAula.getString(1));                            
+                    aula.setEdificio(rsAula.getString(2));
+                }
+            }
+        }
+        
+        return aula;
+    }
+    
+    public Profesor getInfoProf(String idAsig, Connection connection, Date currentFecha, String teorica) throws SQLException
+    {
+        Profesor profesor =  new Profesor();
+        String idProf;
+        
+        try(/*obtengo los id de profesores*/
+            PreparedStatement psImpartidas = connection.prepareStatement("SELECT IDPROF, TEORIA, FECHAINI, FECHAFIN "
+                                                                       + "  FROM IMPARTIDAS "
+                                                                       + " WHERE IDASIG=?");
+            
+            /*obtengo los nombres de los profesores*/
+            PreparedStatement psProf = connection.prepareStatement("SELECT NOMBREPROF, APELLIDOSPROF, EMAIL "
+                                                                 + "  FROM PROFESORES "
+                                                                 + " WHERE IDPROF=?");)
+        {
+            psImpartidas.clearParameters();
+            psImpartidas.setString(1, idAsig);
+            try(ResultSet rsImpartida = psImpartidas.executeQuery())
+            {
+                if(rsImpartida.next())
+                {
+                    do{ /*Compruebo si es teoria o practica o si es una asignatura a medias*/                                                                                                /* x>0 despues, x=0 eq, x<0 antes*/
+                        if(teorica.equals(rsImpartida.getString(2)) || (currentFecha.compareTo(rsImpartida.getDate(3))>=0 && currentFecha.compareTo(rsImpartida.getDate(4))<=0))
+                        {
+                            idProf = rsImpartida.getString(1);
+
+                            //obtener profesores con el id prof
+                            psProf.setString(1, idProf);
+                            try(ResultSet rsProf = psProf.executeQuery())
+                            {
+                                if(rsProf.next())
+                                {                                    
+                                    profesor.setNombre(rsProf.getString(1));
+                                    profesor.setApellidos(rsProf.getString(2));
+                                    profesor.setEmail(rsProf.getString(3));                                    
+                                }                                        
+                            }
+                        }
+                    }while(rsImpartida.next());
+                }
+            }
+        }
+        
+        return profesor;
     }
 }
