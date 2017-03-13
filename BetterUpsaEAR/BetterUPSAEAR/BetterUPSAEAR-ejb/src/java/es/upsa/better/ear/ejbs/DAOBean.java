@@ -152,7 +152,7 @@ public class DAOBean implements DAO
                             {
                                 idAula = rsDia.getString(1);
                                 celda.setNombreAsignatura(asig.getNombreAsig());
-                                celda.setHora(rsDia.getDouble(2));
+                                celda.setHora(rsDia.getString(2));
                                 celda.setTipoAsig(rsDia.getString(rsDia.getString(3)));
                                 celda.setModificacion("");
                             }
@@ -171,7 +171,7 @@ public class DAOBean implements DAO
                             {
                                 do
                                 {
-                                    celda.setHora(rsHorario.getDouble(1));
+                                    celda.setHora(rsHorario.getString(1));
                                     celda.setTipoAsig(rsHorario.getString(2));
                                     idAula=rsHorario.getString(3);
                                     

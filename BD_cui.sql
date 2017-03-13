@@ -50,7 +50,7 @@ create table examenes
 idExam VARCHAR(9),
 idAsig VARCHAR(9),
 fechaExam DATE,
-horaExam NUMBER(2,2),
+horaExam VARCHAR(6),
 idAula VARCHAR(9),
 teoria VARCHAR(20),
 constraint "PK_EXAMENES" primary key (idExam),
@@ -90,7 +90,7 @@ constraint "PK_AULAS" primary key (idAula)
 create table horarios
 (
 dia DATE,
-hora NUMBER(2,2),
+hora VARCHAR(6),
 teoria VARCHAR(20),
 idAsig VARCHAR(9),
 idAula VARCHAR(9),
@@ -104,7 +104,7 @@ CONSTRAINT "FK_AULA_HORARIOS" FOREIGN KEY (idAula)
 create table cambiosHora
 (
 fechaNueva DATE,
-horaNueva NUMBER(2,2),
+horaNueva VARCHAR(6),
 tipo VARCHAR(20),
 idAula VARCHAR(9),
 idAsig VARCHAR(9),
@@ -144,7 +144,7 @@ create table tutorias
 idT VARCHAR(9),
 idProf VARCHAR(9),
 despacho VARCHAR(20),
-horaT NUMBER(2,2),
+horaT VARCHAR(6),
 diaSemana VARCHAR(20),
 constraint "PK_TUTORIAS" primary key (idT),
 CONSTRAINT "FK_PROFESOR_TUTORIAS" FOREIGN KEY (idProf)
@@ -154,7 +154,7 @@ CONSTRAINT "FK_PROFESOR_TUTORIAS" FOREIGN KEY (idProf)
 create table cambiost
 (
 idT VARCHAR(9),
-horaNuevaT NUMBER(2,2),
+horaNuevaT VARCHAR(6),
 diaNuevoT VARCHAR(20),
 tipo VARCHAR(10),
 

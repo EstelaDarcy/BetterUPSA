@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class CeldaHorario 
 {    
     private String nombreAsignatura;
-    private double hora;
+    private String hora;
     private String modificacion;
     private Profesor profesor;    
     private String tipoAsig;    
@@ -52,11 +52,11 @@ public class CeldaHorario
         this.nombreAsignatura = nombreAsignatura;
     }
 
-    public double getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(double hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
