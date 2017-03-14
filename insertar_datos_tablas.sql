@@ -44,4 +44,45 @@ insert into matriculas(expediente, idAsig)
 				values(       123,      3);
 
 insert into horarios(    dia,    hora,   teoria, idAsig, idAula)
-			  values('lunes', '12:00', 'teoria',      1,      )
+			  values('lunes', '10:00', 'teoria',      1,      1)
+
+insert into horarios(    dia,    hora,   teoria, idAsig, idAula)
+			  values('lunes', '11:00', 'teoria',      1,      1)
+
+insert into horarios(    dia,    hora,     teoria, idAsig, idAula)
+			  values('lunes', '12:00', 'practica',      3,      1)
+
+insert into horarios(    dia,    hora,     teoria, idAsig, idAula)
+			  values('lunes', '13:00', 'practica',      3,      1)
+
+insert into horarios(    dia,    hora,      teoria, idAsig, idAula)
+			  values('martes', '09:00', 'practica',      2,      2)
+
+insert into horarios(    dia,    hora,      teoria, idAsig, idAula)
+			  values('martes', '10:00', 'practica',      2,      2)
+
+insert into horarios(    dia,    hora,      teoria, idAsig, idAula)
+			  values('martes', '11:00', 'practica',      3,      1)
+
+insert into horarios(    dia,    hora,      teoria, idAsig, idAula)
+			  values('martes', '12:00', 'practica',      3,      1)
+
+insert into horarios(        dia,    hora,   teoria, idAsig, idAula)
+			  values('miercoles', '09:00', 'teoria',      1,      1)
+
+insert into horarios(        dia,    hora,   teoria, idAsig, idAula)
+			  values('miercoles', '10:00', 'teoria',      2,      2)
+
+insert into horarios(        dia,    hora,   teoria, idAsig, idAula)
+			  values('miercoles', '11:00', 'teoria',      2,      2)
+
+insert into horarios(        dia,    hora,   teoria, idAsig, idAula)
+			  values('miercoles', '12:00', 'teoria',      1,      1)
+
+insert into cambiosHora(  fechaNueva, horaNueva,         tipo, idAula, idAsig,   teoria)
+				 values('23-03-2017',   '12:00', 'recuperada',      1,      1, 'teoria')
+
+insert into cambiosHora(fechaNueva, horaNueva,        tipo, idAula, idAsig,   teoria)
+				 values(		'',        '', 'cancelada',      1,      1, 'teoria')
+
+insert into profesores
