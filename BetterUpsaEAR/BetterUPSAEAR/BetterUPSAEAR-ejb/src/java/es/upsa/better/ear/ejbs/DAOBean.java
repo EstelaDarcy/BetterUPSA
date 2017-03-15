@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -46,7 +44,7 @@ public class DAOBean implements DAO
         String dia = getDayOfTheWeek(currentFecha);
         ArrayList<String> asignaturas = new ArrayList();
         ArrayList<Asignatura> asigSemestre = new ArrayList();
-        String idSemetre;
+        String idSemetre = "";
         boolean examenes=false;
         String idAula="";
         String idAsig;
@@ -77,6 +75,10 @@ public class DAOBean implements DAO
             PreparedStatement psCambioH = connection.prepareStatement("SELECT HORANUEVA, TIPO, IDAULA "
                                                                     + "  FROM CAMBIOSHORA "
                                                                     + " WHERE FECHANUEVA=? AND IDASIG=?");
+            
+            /*Selecciono las asignaturas añadidas*/
+                /*TERMINAAAAR*/
+            PreparedStatement psHAnnadida = connection.prepareStatement("");
             )
                                                  
         {           
@@ -96,52 +98,51 @@ public class DAOBean implements DAO
             /*obtengo los datos de este semestre*/
             if ( rs1.next() )
             {                
-                do
-                {   //Compruebo en que semestre estamos
-                    if(currentFecha.compareTo(rs1.getDate(2))>=0 && currentFecha.compareTo(rs1.getDate(5))<=0)
-                    {
-                        idSemetre = rs1.getString(1);
-                                            
-                        //recorro asignaturas para saber cuales son las de este semestre
-                        for (String asignatura : asignaturas) 
-                        {
-                            psSeAsig.clearParameters();
-                            psSeAsig.setString(1, asignatura);
-                            psSeAsig.setString(2, idSemetre);
-                            
-                            try(ResultSet rsAsig = psSeAsig.executeQuery())
-                            {
-                                if(rsAsig.next())
-                                {/*obtengo las asignaturas en las que esta matriculado este semestre*/
-                                    asigSemestre.add(new Asignatura(rsAsig.getString(2), rsAsig.getString(1)));
-                                }//ya tengo todas las asignaturas de este cuatrimestre
-                            }
-                        }
-                        
-                        //Compruebo si debo buscar en el horario
-                        if(currentFecha.compareTo(rs1.getDate(2))>=0 && currentFecha.compareTo(rs1.getDate(3))<=0)
-                        {/* x>0 despues, x=0 eq, x<0 antes*/
-                            examenes = false;
-                        }
-                        //O BUSCAR EN EXAMENES
-                        else if(currentFecha.compareTo(rs1.getDate(4))>=0 && currentFecha.compareTo(rs1.getDate(5))<=0)
-                        {
-                            examenes = true;                            
-                        }
-                    }
-                }while(rs1.next());
-                
+                //Compruebo en que semestre estamos
+                if(currentFecha.compareTo(rs1.getDate(2))>=0 && currentFecha.compareTo(rs1.getDate(5))<=0)
+                {
+                    idSemetre = rs1.getString(1);
+
+                    //Compruebo si debo buscar en examenes
+                    if(currentFecha.compareTo(rs1.getDate(4))>=0 && currentFecha.compareTo(rs1.getDate(5))<=0)
+                    {/* x>0 despues, x=0 eq, x<0 antes*/
+                        examenes = true;
+                    }                        
+                }                
+            }
+            
+            //recorro asignaturas matriculaadas, para saber cuales son las de este semestre 
+            for (String asignatura : asignaturas) 
+            {
+                psSeAsig.clearParameters();
+                psSeAsig.setString(1, asignatura);
+                psSeAsig.setString(2, idSemetre);
+
+                try(ResultSet rsAsig = psSeAsig.executeQuery())
+                {
+                    if(rsAsig.next())
+                    {/*obtengo las asignaturas en las que esta matriculado este semestre*/
+                        asigSemestre.add(new Asignatura(rsAsig.getString(2), rsAsig.getString(1)));
+                    }//ya tengo todas las asignaturas de este cuatrimestre
+                }
+            }
     /*-----------------------------------------------------------------------------------------------------------------*/            
     
                 /*OBTENGO LOS DATOS DE LAS CELDAS DEL DIA*/
                 for(Asignatura asig :asigSemestre )
-                {
-                    CeldaHorario celda = new CeldaHorario();
+                {                   
                     idAsig = asig.getIdAsig();
-
+                    
+                    /*COMPRUEBO SE HAN AÑADIDO ALGUNA CLASE*/
+                    if(true)
+                    {
+                        
+                    }
+                    
                     /*EXAMENES*/
                     if(examenes==true)
                     {
+                        CeldaHorario celda = new CeldaHorario();
                         psSExam.clearParameters();
                         psSExam.setString(1, asig.getIdAsig());
                         psSExam.setString(2, dia);
@@ -155,12 +156,23 @@ public class DAOBean implements DAO
                                 celda.setHora(rsDia.getString(2));
                                 celda.setTipoAsig(rsDia.getString(rsDia.getString(3)));
                                 celda.setModificacion("");
+                                
+                                //Hay que sacar los datos del aula                    
+                                Aula aula = getInfoAula(idAula, connection);
+                                celda.setInfoAula(aula);
+
+                                //obtener id prof con id asignatura
+                                Profesor profesor = getInfoProf(idAsig, connection, currentFecha, celda.getTipoAsig());
+                                celda.setProfesor(profesor);
+
+                                clases.add(celda);
                             }
                         }
                     }else{/*ES HORARIO NORMAL*/ //hay que hacer un while y obtener idAula                
                         /*-----------------------------------------------------------*/
                                     /*---------REVISAR-----------*/
                         /*-----------------------------------------------------------*/
+                        /*pasar a minusculas toLowerCase();*/
                         psHorario.clearParameters();
                         psHorario.setDate(1, currentFecha);
                         psHorario.setString(2, asig.getIdAsig());
@@ -170,27 +182,28 @@ public class DAOBean implements DAO
                             if(rsHorario.next())
                             {
                                 do
-                                {
+                                {   
+                                    CeldaHorario celda = new CeldaHorario();
+                                    celda.setNombreAsignatura(asig.getNombreAsig());
                                     celda.setHora(rsHorario.getString(1));
                                     celda.setTipoAsig(rsHorario.getString(2));
                                     idAula=rsHorario.getString(3);
                                     
+                                    //Hay que sacar los datos del aula                    
+                                    Aula aula = getInfoAula(idAula, connection);
+                                    celda.setInfoAula(aula);
+
+                                    //obtener id prof con id asignatura
+                                    Profesor profesor = getInfoProf(idAsig, connection, currentFecha, celda.getTipoAsig());
+                                    celda.setProfesor(profesor);
+
+                                    clases.add(celda);
                                 }while(rsHorario.next());
                             }
                         }
-                    }
-                    
-                    //Hay que sacar los datos del aula                    
-                    Aula aula = getInfoAula(idAula, connection);
-                    celda.setInfoAula(aula);
-                                        
-                    //obtener id prof con id asignatura
-                    Profesor profesor = getInfoProf(idAsig, connection, currentFecha, celda.getTipoAsig());
-                    celda.setProfesor(profesor);
-                                        
-                    clases.add(celda);
+                    }                             
                 } 
-            }
+            
         } catch (SQLException sqlException) 
         {
             Logger.getLogger(DAOBean.class.getName()).log(Level.SEVERE, null, sqlException);
