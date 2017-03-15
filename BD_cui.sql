@@ -89,7 +89,7 @@ constraint "PK_AULAS" primary key (idAula)
 
 create table horarios
 (
-dia DATE,
+dia VARCHAR(10),
 hora VARCHAR(6),
 teoria VARCHAR(20),
 idAsig VARCHAR(9),
@@ -129,7 +129,7 @@ create table impartidas
 (
 idProf VARCHAR(9),
 idAsig VARCHAR(9),
-teoria VARCHAR(5),
+teoria VARCHAR(10),
 fechaIni DATE,
 fechaFin DATE,
 

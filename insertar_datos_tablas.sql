@@ -5,7 +5,7 @@ insert into titulaciones(idTitulacion,                nombreTit, idFacultad, num
 				  values(			1, 'Ingenieria Informatica',          1,         4, 'grado');
 
 insert into semestres (idSemestre, fechaIniClase, fechaFinClase, fechaIniExam, fechaFinExam)
-			   values (         5,  '30-02-2017',  '20-05-2017', '02-06-2017', '20-06-2017');
+			   values (         5,  '30-01-2017',  '20-05-2017', '02-06-2017', '20-06-2017');
 
 insert into asignaturas(idAsig, curso, 				 nombreAsignatura, idSemestre, idTitulacion)
 				 values(     1,     4,  'Etica y Derecho Informatico',          5,            1);
@@ -44,45 +44,61 @@ insert into matriculas(expediente, idAsig)
 				values(       123,      3);
 
 insert into horarios(    dia,    hora,   teoria, idAsig, idAula)
-			  values('lunes', '10:00', 'teoria',      1,      1)
+			  values('lunes', '10:00', 'teoria',      1,      1);
 
 insert into horarios(    dia,    hora,   teoria, idAsig, idAula)
-			  values('lunes', '11:00', 'teoria',      1,      1)
+			  values('lunes', '11:00', 'teoria',      1,      1);
 
 insert into horarios(    dia,    hora,     teoria, idAsig, idAula)
-			  values('lunes', '12:00', 'practica',      3,      1)
+			  values('lunes', '12:00', 'practica',      3,      1);
 
 insert into horarios(    dia,    hora,     teoria, idAsig, idAula)
-			  values('lunes', '13:00', 'practica',      3,      1)
+			  values('lunes', '13:00', 'practica',      3,      1);
 
 insert into horarios(    dia,    hora,      teoria, idAsig, idAula)
-			  values('martes', '09:00', 'practica',      2,      2)
+			  values('martes', '09:00', 'practica',      2,      2);
 
 insert into horarios(    dia,    hora,      teoria, idAsig, idAula)
-			  values('martes', '10:00', 'practica',      2,      2)
+			  values('martes', '10:00', 'practica',      2,      2);
 
 insert into horarios(    dia,    hora,      teoria, idAsig, idAula)
-			  values('martes', '11:00', 'practica',      3,      1)
+			  values('martes', '11:00', 'practica',      3,      1);
 
 insert into horarios(    dia,    hora,      teoria, idAsig, idAula)
-			  values('martes', '12:00', 'practica',      3,      1)
+			  values('martes', '12:00', 'practica',      3,      1);
 
 insert into horarios(        dia,    hora,   teoria, idAsig, idAula)
-			  values('miercoles', '09:00', 'teoria',      1,      1)
+			  values('miercoles', '09:00', 'teoria',      1,      1);
+
+insert into horarios(        dia,    hora,     teoria, idAsig, idAula)
+			  values('miercoles', '10:00', 'practica',      2,      2);
+
+insert into horarios(        dia,    hora,     teoria, idAsig, idAula)
+			  values('miercoles', '11:00', 'practica',      2,      2);
 
 insert into horarios(        dia,    hora,   teoria, idAsig, idAula)
-			  values('miercoles', '10:00', 'teoria',      2,      2)
-
-insert into horarios(        dia,    hora,   teoria, idAsig, idAula)
-			  values('miercoles', '11:00', 'teoria',      2,      2)
-
-insert into horarios(        dia,    hora,   teoria, idAsig, idAula)
-			  values('miercoles', '12:00', 'teoria',      1,      1)
+			  values('miercoles', '12:00', 'teoria',      1,      1);
 
 insert into cambiosHora(  fechaNueva, horaNueva,         tipo, idAula, idAsig,   teoria)
-				 values('23-03-2017',   '12:00', 'recuperada',      1,      1, 'teoria')
+				 values('23-03-2017',   '12:00', 'recuperada',      1,      1, 'teoria');
 
 insert into cambiosHora(fechaNueva, horaNueva,        tipo, idAula, idAsig,   teoria)
-				 values(		'',        '', 'cancelada',      1,      1, 'teoria')
+				 values(		'',        '', 'cancelada',      1,      1, 'teoria');
 
-insert into profesores
+insert into profesores(idProf,  nombreProf,    apellidosProf,                email)
+				values(     1, 'Ana Maria', 'Fermoso Garcia', 'afermosoga@upsa.es');
+
+insert into profesores(idProf,  nombreProf,  apellidosProf,               email)
+				values(     2,   'Mariano', 'Raboso Mateo', 'mrabosoma@upsa.es');
+
+insert into profesores(idProf,  nombreProf,     apellidosProf,                email)
+				values(     3,   'Alberto', 'Pedrero Esteban', 'apedreroes@upsa.es');
+
+insert into impartidas(idProf, idAsig,     teoria,     fechaIni,      fechaFin)
+				values(     1,      3, 'practica', '30-01-2017',  '20-05-2017');
+
+insert into impartidas(idProf, idAsig,   teoria,     fechaIni,      fechaFin)
+				values(     2,      1, 'teoria', '30-01-2017',  '20-05-2017');
+
+insert into impartidas(idProf, idAsig,     teoria,     fechaIni,      fechaFin)
+				values(     3,      2, 'practica', '30-01-2017',  '20-05-2017');

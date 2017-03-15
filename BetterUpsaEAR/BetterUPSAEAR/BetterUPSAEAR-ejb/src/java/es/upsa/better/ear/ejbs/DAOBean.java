@@ -66,11 +66,11 @@ public class DAOBean implements DAO
                                                                   + "  WHERE IDASIG=? AND IDSEMESTRE=?");                
        /*----------------------------------------------------------------------------------------------------------------*/         
             /*obtengo datos de la celda del horario del examen*/
-            PreparedStatement psSExam = connection.prepareStatement("SELECT IDAULA, HORA, TIPO "
+            PreparedStatement psSExam = connection.prepareStatement("SELECT IDAULA, HORAEXAM, TEORIA "
                                                                   + "  FROM EXAMENES "
-                                                                  + " WHERE IDASIG=? AND FECHA=?");                 
+                                                                  + " WHERE IDASIG=? AND FECHAEXAM=?");                 
             /*selecciono las clases del dia*/
-            PreparedStatement psHorario = connection.prepareStatement("SELECT HORA, TIPO, IDAULA "
+            PreparedStatement psHorario = connection.prepareStatement("SELECT HORA, TEORIA, IDAULA "
                                                                     + "  FROM HORARIOS "
                                                                     + " WHERE DIA=? AND IDASIG=?");            
             /*Compruebo si hay cambios en esa hora*/
@@ -292,8 +292,7 @@ public class DAOBean implements DAO
                     }while(rsImpartida.next());
                 }
             }
-        }
-        
+        }        
         return profesor;
     }
 }
