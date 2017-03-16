@@ -80,10 +80,10 @@ insert into horarios(        dia,    hora,   teoria, idAsig, idAula)
 			  values('miercoles', '12:00', 'teoria',      1,      1);
 
 insert into cambiosHora(  fechaNueva, horaNueva,         tipo, idAula, idAsig,   teoria)
-				 values('23-03-2017',   '12:00', 'recuperada',      1,      1, 'teoria');
+				 values('24-03-2017',   '12:00', 'recuperada',      1,      1, 'teoria');
 
-insert into cambiosHora(fechaNueva, horaNueva,        tipo, idAula, idAsig,   teoria)
-				 values(		'',        '', 'cancelada',      1,      1, 'teoria');
+insert into cambiosHora(  fechaNueva, horaNueva,        tipo, idAula, idAsig,   teoria)
+				 values('12-03-2017',   '10:00', 'cancelada',      1,      1, 'teoria');
 
 insert into profesores(idProf,  nombreProf,    apellidosProf,                email)
 				values(     1, 'Ana Maria', 'Fermoso Garcia', 'afermosoga@upsa.es');
