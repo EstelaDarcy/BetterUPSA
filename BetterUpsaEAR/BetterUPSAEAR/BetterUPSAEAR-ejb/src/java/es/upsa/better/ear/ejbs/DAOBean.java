@@ -11,6 +11,7 @@ import es.upsa.better.ear.beans.Aula;
 import es.upsa.better.ear.beans.CeldaHorario;
 import es.upsa.better.ear.beans.Profesor;
 import es.upsa.better.ear.beans.Usuario;
+import es.upsa.better.ear.exception.GeneralException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -40,7 +41,7 @@ public class DAOBean implements DAO
     private DataSource dataSource;
     
     @Override
-    public Collection<CeldaHorario> selectHorario(Usuario usuario) 
+    public Collection<CeldaHorario> selectHorario(Usuario usuario) throws GeneralException
     {
         LocalDate ahora = LocalDate.now();
         Date currentFecha = java.sql.Date.valueOf(ahora);
@@ -259,9 +260,9 @@ public class DAOBean implements DAO
             
         } catch (SQLException sqlException) 
         {
-            Logger.getLogger(DAOBean.class.getName()).log(Level.SEVERE, null, sqlException);
+            throw new GeneralException(sqlException);
         }
-        return null;            
+        return clases;            
     }
     
     //Para obtener el dia de a semana cogiendo la fecha del día, principalmente para la tabla de horarios

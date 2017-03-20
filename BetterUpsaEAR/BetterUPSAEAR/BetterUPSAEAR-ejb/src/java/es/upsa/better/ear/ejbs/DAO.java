@@ -7,6 +7,7 @@ package es.upsa.better.ear.ejbs;
 
 import es.upsa.better.ear.beans.CeldaHorario;
 import es.upsa.better.ear.beans.Usuario;
+import es.upsa.better.ear.exception.GeneralException;
 import java.sql.Date;
 import java.util.Collection;
 
@@ -16,5 +17,5 @@ import java.util.Collection;
  */
 public interface DAO 
 {
-    public Collection<CeldaHorario> selectHorario(Usuario usuario);
+    public Collection<CeldaHorario> selectHorario(Usuario usuario) throws GeneralException;
 }
