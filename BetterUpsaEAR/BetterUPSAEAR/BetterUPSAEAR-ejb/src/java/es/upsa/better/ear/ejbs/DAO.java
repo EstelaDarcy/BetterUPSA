@@ -5,8 +5,10 @@
  */
 package es.upsa.better.ear.ejbs;
 
+import es.upsa.better.ear.beans.CeldaHorario;
 import es.upsa.better.ear.beans.Usuario;
 import java.sql.Date;
+import java.util.Collection;
 
 /**
  *
@@ -14,5 +16,5 @@ import java.sql.Date;
  */
 public interface DAO 
 {
-    public void selectHorario(Usuario usuario, Date currentFecha);
+    public Collection<CeldaHorario> selectHorario(Usuario usuario);
 }

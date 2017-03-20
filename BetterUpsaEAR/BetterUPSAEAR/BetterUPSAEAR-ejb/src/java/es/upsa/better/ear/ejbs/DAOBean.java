@@ -17,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -39,8 +40,10 @@ public class DAOBean implements DAO
     private DataSource dataSource;
     
     @Override
-    public void selectHorario(Usuario usuario, Date currentFecha) 
+    public Collection<CeldaHorario> selectHorario(Usuario usuario) 
     {
+        LocalDate ahora = LocalDate.now();
+        Date currentFecha = java.sql.Date.valueOf(ahora);
         Collection<CeldaHorario> clases = new ArrayList();
         String dia = getDayOfTheWeek(currentFecha);
         ArrayList<String> asignaturas = new ArrayList();
@@ -258,6 +261,7 @@ public class DAOBean implements DAO
         {
             Logger.getLogger(DAOBean.class.getName()).log(Level.SEVERE, null, sqlException);
         }
+        return null;            
     }
     
     //Para obtener el dia de a semana cogiendo la fecha del día, principalmente para la tabla de horarios
@@ -272,20 +276,28 @@ public class DAOBean implements DAO
         {/*1 -> D, 2 -> L, 3 -> M, 4 -> X, 5 -> J, 6 -> V, 7 -> S*/
             case 1:
                 diaSemana = "domingo";
+                break;
             case 2:
                 diaSemana = "lunes";
+                break;
             case 3:
                 diaSemana = "martes";
+                break;
             case 4:
                 diaSemana = "miercoles";
+                break;
             case 5:
                 diaSemana = "jueves";
+                break;
             case 6:
                 diaSemana = "viernes";
+                break;
             case 7:
                 diaSemana = "sabado";
+                break;
             default:
                 diaSemana = "error";
+                break;
         }
         return diaSemana;
     }

@@ -17,6 +17,6 @@ import java.util.Collection;
 public interface Logic 
 {
     public Usuario selectUsuario();
-    public Collection<CeldaHorario> selectHorario(Date fecha, Usuario usuario);
+    public Collection<CeldaHorario> selectHorario(Usuario usuario);
     public void updateHorario();
 }
