@@ -5,7 +5,7 @@
  */
 package es.upsa.better.ear.ejbs;
 
-import static com.google.common.base.Ascii.toLowerCase;
+
 import es.upsa.better.ear.beans.Asignatura;
 import es.upsa.better.ear.beans.Aula;
 import es.upsa.better.ear.beans.CeldaHorario;
@@ -26,6 +26,8 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import javax.sql.DataSource;
 
 /**
@@ -35,6 +37,8 @@ import javax.sql.DataSource;
 
 @Resource(name = "jdbc/database", type = DataSource.class, lookup = "jdbc/horario")
 
+@Stateless
+@Local(DAO.class)
 public class DAOBean implements DAO
 {
     @Resource(name="jdbc/database")
@@ -171,7 +175,7 @@ public class DAOBean implements DAO
                                 celda.setInfoAula(aula);
 
                                 //obtener id prof con id asignatura
-                                Profesor profesor = getInfoProf(idAsig, connection, currentFecha, toLowerCase(celda.getTipoAsig()));
+                                Profesor profesor = getInfoProf(idAsig, connection, currentFecha, celda.getTipoAsig().toLowerCase());
                                 celda.setProfesor(profesor);
 
                                 clases.add(celda);

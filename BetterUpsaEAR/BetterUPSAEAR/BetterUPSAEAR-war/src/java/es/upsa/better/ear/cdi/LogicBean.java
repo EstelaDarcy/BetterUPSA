@@ -34,8 +34,8 @@ public class LogicBean implements Logic
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Produces
-    @Named("horasDia")
+    
+    @Named("horario")
     @RequestScoped
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Collection<CeldaHorario> selectHorario(Usuario usuario) throws GeneralException
