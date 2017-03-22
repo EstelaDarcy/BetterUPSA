@@ -78,7 +78,7 @@ public class DAOBean implements DAO
             PreparedStatement psHorario = connection.prepareStatement("SELECT HORA, TEORIA, IDAULA "
                                                                     + "  FROM HORARIOS "
                                                                     + " WHERE LOWER(DIA)=? AND IDASIG=?");            
-            /*Compruebo si hay cambios en esa hora*/
+            /*Compruebo si hay cambios en esa hora NO LA UTILIZO*/
             PreparedStatement psCambioH = connection.prepareStatement("SELECT HORANUEVA, TIPO, IDAULA "
                                                                     + "  FROM CAMBIOSHORA "
                                                                     + " WHERE FECHANUEVA=? AND IDASIG=?");
