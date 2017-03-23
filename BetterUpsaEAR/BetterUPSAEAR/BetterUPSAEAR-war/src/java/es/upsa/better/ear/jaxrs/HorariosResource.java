@@ -5,6 +5,10 @@
  */
 package es.upsa.better.ear.jaxrs;
 
+import es.upsa.better.ear.beans.Horario;
+import es.upsa.better.ear.cdi.Logic;
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -15,20 +19,19 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
-/**
- * REST Web Service
- *
- * @author Estela
- */
+@RequestScoped
 @Path("horarios")
 public class HorariosResource
 {
+    @EJB
+    private Logic logic;
+    
     @GET
     @Path("{id}")
     @Produces(MediaType.TEXT_HTML)
     public Horario getHorario(@PathParam("id") String id) 
     {
-        
+        return null;
     }
 
 }
