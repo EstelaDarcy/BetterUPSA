@@ -29,7 +29,7 @@ public class LogicBean implements Logic
     private DAO dao;
     
     @Override
-    public Usuario selectUsuario() 
+    public Usuario findUsuario(String id) 
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -38,7 +38,7 @@ public class LogicBean implements Logic
     @Named("horario")
     @RequestScoped
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Collection<CeldaHorario> selectHorario(Usuario usuario) throws GeneralException
+    public Collection<CeldaHorario> findHorario(Usuario usuario) throws GeneralException
     {
         return dao.selectHorario(usuario);
     }
@@ -47,6 +47,5 @@ public class LogicBean implements Logic
     public void updateHorario() 
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+    }    
 }

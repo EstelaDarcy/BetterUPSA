@@ -30,6 +30,5 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(es.upsa.better.ear.jaxrs.HorariosResource.class);
-    }
-    
+    }    
 }

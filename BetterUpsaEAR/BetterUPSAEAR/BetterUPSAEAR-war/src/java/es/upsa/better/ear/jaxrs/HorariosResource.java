@@ -5,10 +5,17 @@
  */
 package es.upsa.better.ear.jaxrs;
 
+import es.upsa.better.ear.beans.CeldaHorario;
 import es.upsa.better.ear.beans.Horario;
+import es.upsa.better.ear.beans.Usuario;
 import es.upsa.better.ear.cdi.Logic;
+import es.upsa.better.ear.exception.GeneralException;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -26,12 +33,20 @@ public class HorariosResource
     @EJB
     private Logic logic;
     
+    @Context
+    private HttpServletRequest request;
+    
+    @Context 
+    private HttpServletResponse response;
+    
     @GET
     @Path("{id}")
     @Produces(MediaType.TEXT_HTML)
-    public Horario getHorario(@PathParam("id") String id) 
+    public Collection<CeldaHorario> getHorario(@PathParam("id") String id) throws GeneralException 
     {
-        return null;
+        Usuario usuario = logic.findUsuario(id);
+        Collection<CeldaHorario> horario = logic.findHorario(usuario);
+        return horario;
     }
 
 }

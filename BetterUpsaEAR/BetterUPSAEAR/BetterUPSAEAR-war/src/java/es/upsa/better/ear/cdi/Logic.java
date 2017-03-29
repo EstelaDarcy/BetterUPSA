@@ -17,7 +17,7 @@ import java.util.Collection;
  */
 public interface Logic 
 {
-    public Usuario selectUsuario();
-    public Collection<CeldaHorario> selectHorario(Usuario usuario) throws GeneralException;
+    public Usuario findUsuario(String id);
+    public Collection<CeldaHorario> findHorario(Usuario usuario) throws GeneralException;
     public void updateHorario();
 }
