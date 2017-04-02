@@ -23,14 +23,14 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="celda" items="${clases}">
+                <c:forEach var="celda" items="${horario}">
                     <tr>
                         <td>${celda.hora}</td>
                         <td>                            
                             <c:if test="${celda.modificacion}=='cancelada'">
                                 <b> CANCELADA:  </b>
                             </c:if>
-                            <c:if test="${celda.modificacion}=='cancelada'">
+                            <c:if test="${celda.modificacion}=='recuperada'">
                                  Recuperacion: 
                             </c:if>
                             ${celda.nombreAsignatura}

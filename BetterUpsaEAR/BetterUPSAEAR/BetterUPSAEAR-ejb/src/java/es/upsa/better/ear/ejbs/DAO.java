@@ -6,6 +6,7 @@
 package es.upsa.better.ear.ejbs;
 
 import es.upsa.better.ear.beans.CeldaHorario;
+import es.upsa.better.ear.beans.Horario;
 import es.upsa.better.ear.beans.Usuario;
 import es.upsa.better.ear.exception.GeneralException;
 import java.sql.Date;

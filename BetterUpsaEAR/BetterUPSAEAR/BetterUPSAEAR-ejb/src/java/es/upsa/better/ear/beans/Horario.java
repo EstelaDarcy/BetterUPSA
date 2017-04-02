@@ -5,10 +5,22 @@
  */
 package es.upsa.better.ear.beans;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  *
  * @author Estela
  */
-public class Horario {
-    
+public class Horario 
+{
+    Collection<CeldaHorario> horario = new ArrayList();
+
+    public Collection<CeldaHorario> getHorario() {
+        return horario;
+    }
+
+    public void setHorario(Collection<CeldaHorario> horario) {
+        this.horario = horario;
+    }    
 }

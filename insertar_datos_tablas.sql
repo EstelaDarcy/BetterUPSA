@@ -86,19 +86,19 @@ insert into cambiosHora(  fechaNueva, horaNueva,        tipo, idAula, idAsig,   
 				 values('12-03-2017',   '10:00', 'cancelada',      1,      1, 'teoria');
 
 insert into profesores(idProf,  nombreProf,    apellidosProf,                email)
-				values(     1, 'Ana Maria', 'Fermoso Garcia', 'afermosoga@upsa.es');
+				values(     4, 'Ana Maria', 'Fermoso Garcia', 'afermosoga@upsa.es');
 
 insert into profesores(idProf,  nombreProf,  apellidosProf,               email)
-				values(     2,   'Mariano', 'Raboso Mateo', 'mrabosoma@upsa.es');
+				values(     5,   'Mariano', 'Raboso Mateo', 'mrabosoma@upsa.es');
 
 insert into profesores(idProf,  nombreProf,     apellidosProf,                email)
-				values(     3,   'Alberto', 'Pedrero Esteban', 'apedreroes@upsa.es');
+				values(     6,   'Alberto', 'Pedrero Esteban', 'apedreroes@upsa.es');
 
 insert into impartidas(idProf, idAsig,     teoria,     fechaIni,      fechaFin)
-				values(     1,      3, 'practica', '30-01-2017',  '20-05-2017');
+				values(     4,      3, 'practica', '30-01-2017',  '20-05-2017');
 
 insert into impartidas(idProf, idAsig,   teoria,     fechaIni,      fechaFin)
-				values(     2,      1, 'teoria', '30-01-2017',  '20-05-2017');
+				values(     5,      1, 'teoria', '30-01-2017',  '20-05-2017');
 
 insert into impartidas(idProf, idAsig,     teoria,     fechaIni,      fechaFin)
-				values(     3,      2, 'practica', '30-01-2017',  '20-05-2017');
+				values(     6,      2, 'practica', '30-01-2017',  '20-05-2017');

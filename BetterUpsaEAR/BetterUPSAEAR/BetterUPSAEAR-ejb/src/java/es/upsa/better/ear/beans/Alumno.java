@@ -11,5 +11,4 @@ package es.upsa.better.ear.beans;
  */
 public class Alumno extends Usuario
 {
-    
 }

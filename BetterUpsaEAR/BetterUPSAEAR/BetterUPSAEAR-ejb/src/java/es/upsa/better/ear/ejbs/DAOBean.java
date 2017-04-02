@@ -9,6 +9,7 @@ package es.upsa.better.ear.ejbs;
 import es.upsa.better.ear.beans.Asignatura;
 import es.upsa.better.ear.beans.Aula;
 import es.upsa.better.ear.beans.CeldaHorario;
+import es.upsa.better.ear.beans.Horario;
 import es.upsa.better.ear.beans.Profesor;
 import es.upsa.better.ear.beans.Usuario;
 import es.upsa.better.ear.exception.GeneralException;
@@ -59,7 +60,7 @@ public class DAOBean implements DAO
         String idAsig;
         String diaSemana;
         String hora;
-                
+       
         try(Connection connection = dataSource.getConnection();
             Statement stSelect = connection.createStatement();         
             /*para obtener en que semestre estamos*/
@@ -88,7 +89,6 @@ public class DAOBean implements DAO
                                                                     + " WHERE FECHANUEVA=? AND IDASIG=?");
             
             /*Selecciono las horas añadidas*/
-                /*TERMINAAAAR*/
             PreparedStatement psHCancel = connection.prepareStatement("SELECT TEORIA "
                                                                     + "    FROM CAMBIOSHORA "
                                                                     + "   WHERE LOWER(TIPO)='cancelada' AND HORANUEVA=? AND FECHANUEVA=? AND IDASIG=?");
@@ -177,7 +177,7 @@ public class DAOBean implements DAO
                                 //obtener id prof con id asignatura
                                 Profesor profesor = getInfoProf(idAsig, connection, currentFecha, celda.getTipoAsig().toLowerCase());
                                 celda.setProfesor(profesor);
-
+                                
                                 clases.add(celda);
                             }
                         }
@@ -333,7 +333,7 @@ public class DAOBean implements DAO
     
     public Profesor getInfoProf(String idAsig, Connection connection, Date currentFecha, String teorica) throws SQLException
     {
-        Profesor profesor =  new Profesor();
+        Profesor profesor = new Profesor();
         String idProf;
         
         try(/*obtengo los id de profesores*/
@@ -375,4 +375,6 @@ public class DAOBean implements DAO
         }        
         return profesor;
     }
+    
+    
 }

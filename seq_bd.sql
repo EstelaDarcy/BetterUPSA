@@ -2,11 +2,10 @@ create sequence SEQ_SEMESTRES increment by 1 start with 1 maxvalue 99999 minvalu
 create sequence SEQ_FACULTADES increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
 create sequence SEQ_TITULACIONES increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
 create sequence SEQ_EXAMENES increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
-create sequence SEQ_ALUMNOS increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
+create sequence SEQ_USUARIOS increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
 create sequence SEQ_MATRICULAS increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
 create sequence SEQ_ASIGNATURAS increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
 create sequence SEQ_IMPARTIDAS increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
-create sequence SEQ_PROFESORES increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
 create sequence SEQ_HORARIOS increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
 create sequence SEQ_CAMBIOSH increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
 create sequence SEQ_AULAS increment by 1 start with 1 maxvalue 99999 minvalue 1 order;
