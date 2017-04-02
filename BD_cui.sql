@@ -16,7 +16,7 @@ nombreFac VARCHAR(50),
 constraint "PK_FACULTADES" primary key (idFacultad)
 );
 
-
+ 
 create table titulaciones
 (
 idTitulacion VARCHAR(9),
