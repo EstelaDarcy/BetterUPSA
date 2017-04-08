@@ -42,11 +42,11 @@ public class HorariosResource
     @GET
     @Path("{id}")
     @Produces(MediaType.TEXT_HTML)
-    public Collection<CeldaHorario> getHorario(@PathParam("id") String id) throws GeneralException 
+    public Horario getHorario(@PathParam("id") String id) throws GeneralException 
     {
         //Usuario usuario = new Usuario(id, "prueba1", "Perez");
         Usuario usuario = logic.findUsuario(id);
-        Collection<CeldaHorario> horario = logic.findHorario(usuario);
+        Horario horario = logic.findHorario(usuario);
         return horario;
     }
 

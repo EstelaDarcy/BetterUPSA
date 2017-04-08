@@ -18,5 +18,5 @@ import java.util.Collection;
  */
 public interface DAO 
 {
-    public Collection<CeldaHorario> selectHorario(Usuario usuario) throws GeneralException;
+    public Horario selectHorario(Usuario usuario) throws GeneralException;
 }

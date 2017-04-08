@@ -14,13 +14,13 @@ import java.util.Collection;
  */
 public class Horario 
 {
-    Collection<CeldaHorario> horario = new ArrayList();
+    ArrayList<CeldaHorario> horario = new ArrayList();
 
-    public Collection<CeldaHorario> getHorario() {
+    public ArrayList<CeldaHorario> getHorario() {
         return horario;
     }
 
-    public void setHorario(Collection<CeldaHorario> horario) {
+    public void setHorario(ArrayList<CeldaHorario> horario) {
         this.horario = horario;
-    }    
+    }
 }

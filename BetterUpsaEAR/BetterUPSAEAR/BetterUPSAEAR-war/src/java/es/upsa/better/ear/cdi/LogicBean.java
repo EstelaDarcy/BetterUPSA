@@ -1,6 +1,7 @@
 package es.upsa.better.ear.cdi;
 
 import es.upsa.better.ear.beans.CeldaHorario;
+import es.upsa.better.ear.beans.Horario;
 import es.upsa.better.ear.beans.Usuario;
 import es.upsa.better.ear.ejbs.DAO;
 import es.upsa.better.ear.exception.GeneralException;
@@ -38,7 +39,7 @@ public class LogicBean implements Logic
     @Named("horario")
     @RequestScoped
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Collection<CeldaHorario> findHorario(Usuario usuario) throws GeneralException
+    public Horario findHorario(Usuario usuario) throws GeneralException
     {
         return dao.selectHorario(usuario);
     }
