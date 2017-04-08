@@ -238,7 +238,7 @@ public class DAOBean implements DAO
         }        
         return asignaturasMatriculadas;
     }
-    
+       
     //Obtengo las asignaturas de ese cautrimestre en las que el alumno esta matriculado
     public ArrayList<Asignatura> getAsigMatriculadasSemestre(Connection connection, ArrayList<String> asignaturasMatriculadas, String idSemestre) throws SQLException
     {
