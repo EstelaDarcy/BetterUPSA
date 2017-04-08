@@ -1,0 +1,35 @@
+body {
+  width: 1250px;
+  height: 695px;
+  background-color: #f6f6f6;
+}
+
+.immediate_zone {
+  content: url("../assets/near_zone.jpg");
+  width: 1275px;
+  height: 715px;
+  object-fit: contain;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.near_zone {
+  content: url("../assets/mid_zone.jpg");
+  width: 1275px;
+  height: 715px;
+  object-fit: contain;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.far_zone {
+  content: url("../assets/far_zone.jpg");
+  width: 1275px;
+  height: 715px;
+  object-fit: contain;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}

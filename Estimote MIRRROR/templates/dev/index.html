@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="mirror_utils.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <script language="JavaScript">
+        mirror.init();
+        mirror.listen(Mirror.Events.SENSORS, {
+            onchanged: function(ev) {
+                $("#sensors").text('Active sensors: ' + JSON.stringify(ev.items))
+            }
+        });
+        var queue = new MirrorClientQueue(mirror, function(queue) {
+            $("#clients").text(JSON.stringify(queue))
+        });
+    </script>
+    <div id="main_frame">
+        <h1>Development</h1>
+        <p>Sensors:
+            <p id="sensors">No sensors</p>
+        </p>
+        <p>Clients:
+            <p id="clients"></p>
+        </p>
+    </div>
+</body>
+
+</html>

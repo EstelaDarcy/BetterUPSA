@@ -1,0 +1,27 @@
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script src="jquery-3.1.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/fonts/fonts.css"/>
+  <link rel="stylesheet" type="text/css" href="css/template.css"/>
+  <script language="JavaScript">
+      if (mirror) {
+          mirror.init();
+          mirror.listen(Mirror.Events.USER_DATA, {
+              ondata: function(ev) {
+                  if (ev.data.zone && ['near', 'immediate', 'far'].indexOf(ev.data.zone) > -1) {
+                      $("#zone").attr('class', ev.data.zone + '_zone');
+                  }
+              },
+              ondisconnect: function(ev) {
+                  mirror.selectTemplate(null)
+              }
+          })
+      }
+  </script>
+</head>
+<body>
+  <img id="zone" class="near_zone"/>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="jquery-3.1.1.min.js"></script>
+    <script language="JavaScript">
+        if (typeof mirror != 'undefined') {
+            mirror.init();
+            mirror.listen(Mirror.Events.USER_DATA, {
+                ondata: function(ev) {
+                    $(document.body).css('background-color', ev.data.bgcolor ? ev.data.bgcolor : "#282363");
+                },
+            })
+        }
+
+        function displayTime() {
+            var now = new Date();
+            var time = now.toLocaleTimeString();
+            time = time.split('').map(function(ch) {
+              return '<div class="letter">'+ ch + '</div>';
+            }).join('');
+            $('#time').html(time);
+            $('#date').text(now.toLocaleDateString());
+            setTimeout(displayTime, 1000);
+        }
+        displayTime();
+    </script>
+</head>
+
+<body>
+    <div id="main_frame">
+        <div id="time"></div>
+        <div id="date"></div>
+    </div>
+    <div id="logo"><img src="logo.png" /></div>
+</body>
+
+</html>

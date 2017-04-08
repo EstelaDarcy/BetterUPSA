@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="fonts/fonts.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="defaultLanguage" content="en">
+    <meta name="availableLanguages" content="en,es,pl">
+    <link rel="localization" href="locales/mirror.{locale}.ftl">
+    <script defer src="l20n.js"></script>
+    <script language="JavaScript">
+        if (typeof mirror != 'undefined') {
+            mirror.init();
+            mirror.listen(Mirror.Events.USER_DATA, {
+                ondata: function(ev) {
+                },
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div id="left_side">
+        <div data-l10n-id="title" id="title"></div>
+        <div data-l10n-id="description" id="description"></div>
+        <div id="logo">
+            <div id="logo_frame"><img id="logo_img" src="mirror.png"></div>
+            <div id="link"><span data-l10n-id="app_link">Mirror App</span><br/><u>mirror.estimote.com</u></div>
+        </div>
+    </div>
+    <div id="phone"><img src="phone.png"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+body {
+    background-color: #282363;
+    color: #ffffff;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#left_side {
+    position: fixed;
+    left: 5.88vw;
+    top: 20vh;
+}
+
+#title {
+    font-family: 'BrandonTextMedium';
+    font-size: 9.8vh;
+    width: 52vw;
+    height: 22.22vh;
+    margin-bottom: 3vh;
+    line-height: 11.11vh;
+}
+
+#description {
+    font-family: 'SlateStdBk';
+    line-height: 5.55vh;
+    width: 41.2vw;
+    height: 16.6vh;
+    color: #908eb7;
+    font-size: 4.16vh;
+    margin-bottom: 1em;
+}
+
+#phone {
+    width: auto;
+    height: 72.7vh;
+    position: fixed;
+    bottom: 0vh;
+    right: 8.125vw;
+}
+
+#link {
+    font-family: 'SlateStdBk';
+    display: inline-block;
+    font-size: 3.33vh;
+}
+
+#logo {
+    display: inline-block;
+}
+
+#logo_img {
+  width:4.375vw;
+}
+
+#logo_frame {
+    margin-right: 2.4vw;
+    border-radius: 2.31vmin;
+    border: 2px solid #ffffff;
+    padding: 2.77vmin;
+    display: inline-block;
+}

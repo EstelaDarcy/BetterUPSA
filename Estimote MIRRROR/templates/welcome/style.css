@@ -1,0 +1,74 @@
+body {
+    background-color: #282163;
+    color: #ffffff;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#main_frame {
+  position: fixed;
+  left: 10.5vw;
+  top: 21.75vh;
+}
+
+#header {
+    font-family: BrandonText-Medium;
+    font-size: 8.3vh;
+    margin-bottom: 3vh;
+    line-height: 11.1vh;
+    max-width: 52vw;
+    max-height: 22.22vh;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#content {
+  font-family: SlateStd-Bk;
+  line-height: 5.55vh;
+  color: #908eb7;
+  font-size: 4.16vh;
+  max-width: 41.2vw;
+  margin-bottom: 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#calendar {
+  font-family: SlateStd-Bk;
+  color: #908eb7;
+  line-height:  5.55vh;
+  font-size: 4.16vh;
+  margin-top: 19.35vh;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#cal_img {
+  width: 4vw;
+  vertical-align: middle;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#cal_text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#avatar {
+  position: fixed;
+  width: auto;
+  height: 27vh;
+  right: 14.73vw;
+  bottom: 26.4vh;
+}
+
+#logo {
+  position: fixed;
+  top: 7.12vw;
+  right: 4.37vw;
+  height: auto;
+}

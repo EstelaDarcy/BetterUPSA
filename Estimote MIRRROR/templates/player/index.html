@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="jquery-3.1.1.min.js"></script>
+    <script language="JavaScript">
+        if (typeof mirror != 'undefined') {
+            mirror.init();
+            mirror.listen(Mirror.Events.USER_DATA, {
+                ondata: function(ev) {
+                    $(document.body).css('background-color', ev.data.bgcolor ? ev.data.bgcolor : "#282363");
+                },
+            })
+        }
+
+        function play() {
+            var vid = document.getElementById("player");
+            vid.play();
+        }
+    </script>
+</head>
+
+<body onload="play()">
+    <div id="main_frame">
+        <video id="player" width="640" height="480" loop>
+        <source src="movie.webm" type="video/webm">
+      </video>
+        <div id="msg"></div>
+    </div>
+    <div id="logo"><img src="logo.png" /></div>
+</body>
+
+</html>
