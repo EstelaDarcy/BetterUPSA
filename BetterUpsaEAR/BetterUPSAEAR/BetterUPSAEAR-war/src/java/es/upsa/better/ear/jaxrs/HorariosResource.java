@@ -10,10 +10,12 @@ import es.upsa.better.ear.beans.Horario;
 import es.upsa.better.ear.beans.Usuario;
 import es.upsa.better.ear.cdi.Logic;
 import es.upsa.better.ear.exception.GeneralException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
@@ -26,8 +28,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
-@RequestScoped
 @Path("horario")
+@RequestScoped
 public class HorariosResource
 {
     @EJB
@@ -38,6 +40,16 @@ public class HorariosResource
     
     @Context 
     private HttpServletResponse response;
+    
+    @Context
+    private UriInfo uriInfo;
+    
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public void getHtml() throws ServletException, IOException 
+    {
+        request.getRequestDispatcher("/saludo.jsp").forward(request, response);
+    }
     
     @GET
     @Path("{id}")
