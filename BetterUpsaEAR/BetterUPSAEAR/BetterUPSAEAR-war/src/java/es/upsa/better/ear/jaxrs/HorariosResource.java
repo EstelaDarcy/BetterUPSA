@@ -27,7 +27,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 @RequestScoped
-@Path("horarios")
+@Path("horario")
 public class HorariosResource
 {
     @EJB
@@ -44,7 +44,6 @@ public class HorariosResource
     @Produces(MediaType.TEXT_HTML)
     public Horario getHorario(@PathParam("id") String id) throws GeneralException 
     {
-        //Usuario usuario = new Usuario(id, "prueba1", "Perez");
         Usuario usuario = logic.findUsuario(id);
         Horario horario = logic.findHorario(usuario);
         return horario;

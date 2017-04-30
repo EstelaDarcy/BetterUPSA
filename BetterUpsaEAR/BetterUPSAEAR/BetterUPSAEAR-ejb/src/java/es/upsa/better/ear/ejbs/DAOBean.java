@@ -6,6 +6,7 @@
 package es.upsa.better.ear.ejbs;
 
 
+import es.upsa.better.ear.beans.Alumno;
 import es.upsa.better.ear.beans.Asignatura;
 import es.upsa.better.ear.beans.Aula;
 import es.upsa.better.ear.beans.CeldaHorario;
@@ -422,6 +423,51 @@ public class DAOBean implements DAO
         }
         
         return null;
+    }
+
+    //Obtengo los datos del usuario, ya sea alumno o profesor, con el id
+    @Override
+    public Usuario selectUsuario(String id) throws GeneralException 
+    {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement selectAlumno = connection.prepareStatement("SELECT NOMBREAL, APELLIDOSAL "
+                                                                       + "  FROM ALUMNOS "
+                                                                       + " WHERE EXPEDIENTE=?");
+            PreparedStatement selectProfesor = connection.prepareStatement("SELECT NOMBREPROF, APELLIDOSPROF, EMAIL "
+                                                                         + "  FROM PROFESORES "
+                                                                         + " WHERE IDPROF=?");    )
+        {
+            selectAlumno.setString(1, id);
+            try(ResultSet rsAlumno = selectAlumno.executeQuery())
+            {
+                if(rsAlumno.next())
+                {
+                    Alumno alumno = new Alumno();
+                    alumno.setIdentificador(id);
+                    alumno.setNombre(rsAlumno.getString(1));
+                    alumno.setApellidos(rsAlumno.getString(2));
+                    
+                    return alumno;
+                }
+                selectProfesor.setString(1, id);
+                try(ResultSet rsProfesor = selectProfesor.executeQuery())
+                {
+                    if(rsProfesor.next())
+                    {
+                        Profesor profesor = new Profesor();
+                        profesor.setIdentificador(id);
+                        profesor.setNombre(rsProfesor.getString(1));
+                        profesor.setApellidos(rsProfesor.getString(2));
+                        profesor.setEmail(rsProfesor.getString(3));
+                        
+                        return profesor;
+                    }
+                }                
+            }
+        } catch (SQLException sqlException) {
+            Logger.getLogger(DAOBean.class.getName()).log(Level.SEVERE, null, sqlException);
+        }
+        throw new GeneralException();
     }
     
 }

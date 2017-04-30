@@ -15,7 +15,7 @@ import es.upsa.better.ear.exception.GeneralException;
  */
 public interface Logic 
 {
-    public Usuario findUsuario(String id);
+    public Usuario findUsuario(String id) throws GeneralException;
     public Horario findHorario(Usuario usuario) throws GeneralException;
     public void updateHorario();
 }
