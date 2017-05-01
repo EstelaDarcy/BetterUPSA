@@ -21,6 +21,6 @@ public class Horario
     }
 
     public void setHorario(ArrayList<CeldaHorario> horario) {
-        this.horario = horario;
+        horario.addAll(horario);
     }
 }

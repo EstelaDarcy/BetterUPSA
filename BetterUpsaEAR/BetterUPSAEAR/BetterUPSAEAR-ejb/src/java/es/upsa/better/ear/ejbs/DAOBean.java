@@ -314,14 +314,15 @@ public class DAOBean implements DAO
                 }
             }
         }        
-        return null;
+        return clases;
     }
     
     //Informcion de todas las clases del dia
     public ArrayList<CeldaHorario> getInfoClases(Connection connection, ArrayList<Asignatura> asigSemMatriculadas, Date currentFecha, String diaSemana) throws SQLException
     {
         String idAsig, idAula;
-        String hora;        
+        String hora;  
+        ArrayList<CeldaHorario> clases = new ArrayList();
     
         try( /*selecciono las clases del dia*/
             PreparedStatement psHorario = connection.prepareStatement("SELECT HORA, TEORIA, IDAULA "
@@ -340,7 +341,6 @@ public class DAOBean implements DAO
             for(Asignatura asig :asigSemMatriculadas )
             {                   
                 idAsig = asig.getIdAsig();
-                ArrayList<CeldaHorario> clases = new ArrayList();
                 
                 /*pasar a minusculas toLowerCase(); java*/
                         /*pasar a minusculas lower()        SQL*/
@@ -393,8 +393,8 @@ public class DAOBean implements DAO
                 }
 
                 psHAnnadida.clearParameters();
-                psHAnnadida.setDate(1, currentFecha);
-                psHAnnadida.setString(2, asig.getIdAsig());
+                psHAnnadida.setDate(2, currentFecha);
+                psHAnnadida.setString(1, asig.getIdAsig());
 
                 //Compruebo si hay alguna asignatura que se recupere
                 try(ResultSet rsAdd = psHAnnadida.executeQuery())
@@ -422,7 +422,7 @@ public class DAOBean implements DAO
             }
         }
         
-        return null;
+        return clases;
     }
 
     //Obtengo los datos del usuario, ya sea alumno o profesor, con el id

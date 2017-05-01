@@ -18,7 +18,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 
-@EJB(name="ejb/dao", beanInterface = DAO.class, lookup = "java:app/BetterUPSAEAR-ejb/DaoBean!es.upsa.better.ear.DAO")
+@EJB(name="ejb/dao", beanInterface = DAO.class, lookup = "java:app/BetterUPSAEAR-ejb/DAOBean!es.upsa.better.ear.ejbs.DAO")
 
 @Stateless
 @Local(Logic.class)
