@@ -93,14 +93,23 @@ public class DAOBean implements DAO
             {
                 clases = getInfoExamenes(connection, asigSemMatriculadas, currentFecha);                                               
             }else{/*ES HORARIO NORMAL*/    
-                clases = getInfoClases(connection, asigSemMatriculadas, currentFecha, diaSemana);
+                clases = getInfoClases(connection, asigSemMatriculadas, currentFecha, diaSemana);                
             } 
             
         } catch (SQLException sqlException) 
         {
             throw new GeneralException(sqlException);
         }
-        horario.setHorario(clases);
+//        //horario.setHorario(clases);
+        if(!clases.isEmpty())
+        {
+            //horario.getHorario().addAll(clases);
+            horario.addCeldas(clases);
+            String hola = "hola";
+        }else
+        {
+            throw new GeneralException();
+        }
         return horario;            
     }
     
