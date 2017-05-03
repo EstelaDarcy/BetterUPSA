@@ -54,7 +54,7 @@ public class DAOBean implements DAO
         ArrayList<String> asignaturasMatriculadas = new ArrayList();
         ArrayList<Asignatura> asigSemMatriculadas = new ArrayList();
         String idSemetre="";
-        Horario horario = null;
+        Horario horario = new Horario();
         boolean examenes=false;
         String diaSemana;        
        

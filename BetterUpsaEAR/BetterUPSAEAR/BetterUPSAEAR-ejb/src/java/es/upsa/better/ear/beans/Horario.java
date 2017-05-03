@@ -26,6 +26,10 @@ public class Horario
     
     public void addCeldas(ArrayList<CeldaHorario> clases)
     {
-        horario.addAll(clases);
+        //horario.addAll(clases);
+        for(CeldaHorario clase : clases)
+        {
+            horario.add(clase);
+        }
     }
 }
