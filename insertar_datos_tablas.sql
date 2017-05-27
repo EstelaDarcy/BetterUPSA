@@ -34,6 +34,8 @@ insert into examenes(idExam, idAsig,    fechaExam, horaExam, idAula,     teoria)
 insert into alumnos(expediente,  nombreAl, apellidosAl)
 			 values(       123, 'prueba1',     'Perez');
 
+			 insert into alumnos(expediente,  nombreAl, apellidosAl)
+			 values(       66, 'prueba2',     'Mengano');
 insert into matriculas(expediente, idAsig)
 				values(       123,      1);
 

@@ -31,10 +31,6 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 
-/**
- *
- * @author cxb0105
- */
 
 @Resource(name = "jdbc/database", type = DataSource.class, lookup = "jdbc/horario")
 
@@ -142,7 +138,8 @@ public class DAOBean implements DAO
                 diaSemana = "viernes";
                 break;
             case 7:
-                diaSemana = "sabado";
+                //diaSemana = "sabado";
+                diaSemana = "lunes";
                 break;
             default:
                 diaSemana = "error";
@@ -478,5 +475,68 @@ public class DAOBean implements DAO
         }
         throw new GeneralException();
     }
+
+    @Override
+    public Horario selectHorarioProf(Usuario usuario) throws GeneralException 
+    {
+        LocalDate ahora = LocalDate.now();
+        Date currentFecha = java.sql.Date.valueOf(ahora);
+        ArrayList<CeldaHorario> clases = new ArrayList();        
+        ArrayList<String> asignaturasMatriculadas = new ArrayList();
+        ArrayList<Asignatura> asigSemMatriculadas = new ArrayList();
+        String idSemetre="";
+        Horario horario = new Horario();
+        boolean examenes=false;
+        String diaSemana; 
+        
+        diaSemana = getDayOfTheWeek(currentFecha); //obengo en qué dia de la semana estoy
+        
+        try(Connection connection = dataSource.getConnection();
+            Statement stSelect = connection.createStatement();         
+            /*para obtener en que semestre estamos*/
+            ResultSet rs1 = stSelect.executeQuery("SELECT IDSEMESTRE, FECHAINICLASE, FECHAFINCLASE, FECHAINIEXAM, FECHAFINEXAM "
+                                                 + " FROM SEMESTRES")                                        
+        )                                      
+        {                         
+            /*obtengo los datos de este semestre*/
+            while ( rs1.next() )
+            {                
+                //Compruebo en que semestre estamos
+                if(currentFecha.compareTo(rs1.getDate(2))>=0 && currentFecha.compareTo(rs1.getDate(5))<=0)
+                {
+                    idSemetre = rs1.getString(1);
+
+                    //Compruebo si debo buscar en examenes
+                    if(currentFecha.compareTo(rs1.getDate(4))>=0 && currentFecha.compareTo(rs1.getDate(5))<=0)
+                    {/* x>0 despues, x=0 eq, x<0 antes*/
+                        examenes = true;
+                    }                        
+                }                
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }    
     
+    //OBTENGO LAS ASIGNATURAS QUE IMPARTE ESE PREOFESOR
+    public ArrayList<String> getAsigImpartidas()
+    {
+        return null;
+    }
+    
+    //LAS TUTORIAS DE ESA SEMANA DE ESE PROFESOR
+    public void getTutorias()
+    {
+        
+    }
+    
+    //LAS ASIGNATURAS QUE TENDRA EL PROFESOR EN SU HORARIO
+    public ArrayList<Asignatura> getAsigProf()
+    {
+        return null;
+    }
 }

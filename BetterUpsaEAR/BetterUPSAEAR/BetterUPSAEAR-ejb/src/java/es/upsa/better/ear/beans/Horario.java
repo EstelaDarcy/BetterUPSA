@@ -32,4 +32,13 @@ public class Horario
             horario.add(clase);
         }
     }
+    
+    public void addVacio()
+    {
+        CeldaHorario vacio = new CeldaHorario();
+        
+        vacio.setNombreAsignatura("NO IENES CLASE HOY ");
+        
+        horario.add(vacio);        
+    }
 }

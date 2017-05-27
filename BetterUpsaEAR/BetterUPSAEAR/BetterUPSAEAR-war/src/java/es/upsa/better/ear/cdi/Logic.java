@@ -9,13 +9,10 @@ import es.upsa.better.ear.beans.Usuario;
 import es.upsa.better.ear.beans.Horario;
 import es.upsa.better.ear.exception.GeneralException;
 
-/**
- *
- * @author cxb0105
- */
 public interface Logic 
 {
     public Usuario findUsuario(String id) throws GeneralException;
     public Horario findHorario(Usuario usuario) throws GeneralException;
+    public Horario findHorarioProf(Usuario usuario) throws GeneralException;
     public void updateHorario();
 }

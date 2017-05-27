@@ -52,4 +52,10 @@ public class LogicBean implements Logic
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }    
+
+    @Override
+    public Horario findHorarioProf(Usuario usuario) throws GeneralException 
+    {
+        return dao.selectHorarioProf(usuario);
+    }
 }

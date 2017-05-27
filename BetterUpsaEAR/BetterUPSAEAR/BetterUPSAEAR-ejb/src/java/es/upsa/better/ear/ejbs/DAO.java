@@ -12,12 +12,9 @@ import es.upsa.better.ear.exception.GeneralException;
 import java.sql.Date;
 import java.util.Collection;
 
-/**
- *
- * @author cxb0105
- */
 public interface DAO 
 {
     public Horario selectHorario(Usuario usuario) throws GeneralException;
     public Usuario selectUsuario(String id) throws GeneralException;
+    public Horario selectHorarioProf(Usuario usuario) throws GeneralException;
 }

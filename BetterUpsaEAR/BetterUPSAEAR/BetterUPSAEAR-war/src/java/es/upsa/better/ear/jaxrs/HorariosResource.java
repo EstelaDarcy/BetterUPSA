@@ -7,6 +7,7 @@ package es.upsa.better.ear.jaxrs;
 
 import es.upsa.better.ear.beans.CeldaHorario;
 import es.upsa.better.ear.beans.Horario;
+import es.upsa.better.ear.beans.Profesor;
 import es.upsa.better.ear.beans.Usuario;
 import es.upsa.better.ear.cdi.Logic;
 import es.upsa.better.ear.exception.GeneralException;
@@ -57,8 +58,15 @@ public class HorariosResource
     public Horario getHorario(@PathParam("id") String id) throws GeneralException 
     {
         Usuario usuario = logic.findUsuario(id);
-        Horario horario = logic.findHorario(usuario);
-        return horario;
+//        if(usuario instanceof Profesor)
+//        {
+            Horario horario = logic.findHorarioProf(usuario);
+            return horario;
+        
+//        }else{
+//            Horario horario = logic.findHorario(usuario);
+//            return horario;
+//        }              
     }
 
 }
