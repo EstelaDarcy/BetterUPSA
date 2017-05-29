@@ -53,7 +53,8 @@ public class DAOBean implements DAO
         Horario horario = new Horario();
         boolean examenes=false;
         String diaSemana;        
-       
+        
+        horario.setNombreUsuario(usuario.getNombre());
         diaSemana = getDayOfTheWeek(currentFecha); //obengo en qué dia de la semana estoy
         
         try(Connection connection = dataSource.getConnection();
@@ -120,7 +121,8 @@ public class DAOBean implements DAO
         switch(dia)
         {/*1 -> D, 2 -> L, 3 -> M, 4 -> X, 5 -> J, 6 -> V, 7 -> S*/
             case 1:
-                diaSemana = "domingo";
+                //diaSemana = "domingo";
+                diaSemana = "lunes";
                 break;
             case 2:
                 diaSemana = "lunes";
@@ -138,8 +140,7 @@ public class DAOBean implements DAO
                 diaSemana = "viernes";
                 break;
             case 7:
-                //diaSemana = "sabado";
-                diaSemana = "lunes";
+                diaSemana = "sabado";                
                 break;
             default:
                 diaSemana = "error";
@@ -523,9 +524,30 @@ public class DAOBean implements DAO
     }    
     
     //OBTENGO LAS ASIGNATURAS QUE IMPARTE ESE PREOFESOR
-    public ArrayList<String> getAsigImpartidas()
+    public ArrayList<String> getAsigImpartidas(Connection connection, String id) throws SQLException
     {
-        return null;
+        ArrayList<String> asignaturasMatriculadas = new ArrayList();
+        
+        try(/*obtengo las asignaturas en las que se matriculo el alumno*/    
+            PreparedStatement psSelectAsigMatriculadas = connection.prepareStatement("SELECT IDASIG "
+                                                                                    + " FROM IMPARTIDAS "
+                                                                                   + " WHERE IDPROF = ?");
+            )
+        {
+            psSelectAsigMatriculadas.setString(1, id);
+            //OBTENGO LAS ASIGNATURAS EN LAS QUE ESTA MATRICULADO EL ALUMNO
+            try(ResultSet rs2 = psSelectAsigMatriculadas.executeQuery())
+            {
+                if ( rs2.next() )
+                {                
+                    do
+                    {
+                        asignaturasMatriculadas.add(rs2.getString(1));
+                    }while(rs2.next());
+                }
+            }
+        }        
+        return asignaturasMatriculadas;
     }
     
     //LAS TUTORIAS DE ESA SEMANA DE ESE PROFESOR
@@ -535,8 +557,33 @@ public class DAOBean implements DAO
     }
     
     //LAS ASIGNATURAS QUE TENDRA EL PROFESOR EN SU HORARIO
-    public ArrayList<Asignatura> getAsigProf()
+    public ArrayList<Asignatura> getAsigProf(Connection connection, ArrayList<String> asignaturasMatriculadas, String idSemestre) throws SQLException
     {
-        return null;
+        ArrayList<Asignatura> asigSemMatriculadas = new ArrayList();
+        
+        try(/*selecciono asignaturas matriculadas en ese semestre*/    
+            PreparedStatement psSeAsig = connection.prepareStatement("SELECT NOMBREASIGNATURA, IDASIG"
+                                                                  + "   FROM ASIGNATURAS"
+                                                                  + "  WHERE IDASIG=? AND IDSEMESTRE=?");
+            )
+        {
+            //recorro asignaturas matriculaadas, para saber cuales son las de este semestre 
+            for (String asignatura : asignaturasMatriculadas) 
+            {
+                psSeAsig.clearParameters();
+                psSeAsig.setString(1, asignatura);
+                psSeAsig.setString(2, idSemestre);
+
+                try(ResultSet rsAsig = psSeAsig.executeQuery())
+                {
+                    if(rsAsig.next())
+                    {/*obtengo las asignaturas en las que esta matriculado este semestre*/
+                        asigSemMatriculadas.add(new Asignatura(rsAsig.getString(2), rsAsig.getString(1)));
+                    }//ya tengo todas las asignaturas de este cuatrimestre
+                }
+            }
+        }
+        
+        return asigSemMatriculadas;
     }
 }

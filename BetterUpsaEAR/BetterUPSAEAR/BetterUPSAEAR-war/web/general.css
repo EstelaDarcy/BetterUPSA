@@ -1,0 +1,59 @@
+body{
+  font-family: monospace;
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;  
+  margin-top: -9px;
+  background: url('logo_upsa_amarillo.jpg') no-repeat right top;
+  border-right: 1em solid transparent;
+  
+}
+
+h1 {
+    margin-left: 2em;
+}
+
+table
+{
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+
+tbody tr:nth-child(odd) {
+   background-color: #FFF486;
+}
+
+tbody tr:nth-child(even) {
+   background-color: #FFE363;
+}
+
+#contenido {
+    vertical-align: middle;
+}
+
+.tabla{
+  /*background: url('logo_upsa_amarillo.jpg') no-repeat right;
+  */
+  border-right: 1em solid transparent;
+  width: 100%;
+  height: 100%;
+}
+.titulo
+{
+    text-align: center;
+}
+
+
+/*
+Cancelaciones y Recuperaciones 
+*/
+.cancelada {
+    background-color: #F00;
+}
+.recuperada {
+    background-color: #0F0;
+}
+.canceladaRecuperacion{
+    text-transform: uppercase;
+}

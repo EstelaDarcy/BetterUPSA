@@ -60,12 +60,12 @@ public class HorariosResource
         Usuario usuario = logic.findUsuario(id);
 //        if(usuario instanceof Profesor)
 //        {
-            Horario horario = logic.findHorarioProf(usuario);
-            return horario;
+//            Horario horario = logic.findHorarioProf(usuario);
+//            return horario;
         
 //        }else{
-//            Horario horario = logic.findHorario(usuario);
-//            return horario;
+            Horario horario = logic.findHorario(usuario);
+            return horario;
 //        }              
     }
 

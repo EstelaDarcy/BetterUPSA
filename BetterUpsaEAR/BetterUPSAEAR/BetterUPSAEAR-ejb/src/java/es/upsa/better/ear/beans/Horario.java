@@ -15,6 +15,15 @@ import java.util.Collection;
 public class Horario 
 {
     ArrayList<CeldaHorario> horario = new ArrayList();
+    private String nombreUsuario;
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
 
     public ArrayList<CeldaHorario> getHorario() {
         return horario;
