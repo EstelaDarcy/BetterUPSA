@@ -13,10 +13,20 @@ public class Asignatura
 {
     private String idAsig;
     private String nombreAsig;
+    private String curso;
 
-    public Asignatura(String idAsig, String nombreAsig) {
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public Asignatura(String idAsig, String nombreAsig, String curso) {
         this.idAsig = idAsig;
         this.nombreAsig = nombreAsig;
+        this.curso = curso;
     }
 
     public String getIdAsig() {

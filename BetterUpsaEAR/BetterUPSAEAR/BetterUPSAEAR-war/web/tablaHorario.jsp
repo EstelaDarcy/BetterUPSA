@@ -33,6 +33,7 @@
                         <c:if test="${horario.alumno=='true'}">
                             <th>Profesor</th>
                         </c:if>
+                        <th>Curso</th>
                         <th>Aula</th>
                     </tr>
                 </thead>
@@ -51,6 +52,9 @@
                                     <p>${celda.profesor.email}</p>
                                 </td>
                             </c:if>
+                            <td>
+                                ${celda.curso}
+                            </td>
                             <td class='${celda.modificacion}'>
                                 <c:if test="${horario.alumno=='false'}">
                                     <br>

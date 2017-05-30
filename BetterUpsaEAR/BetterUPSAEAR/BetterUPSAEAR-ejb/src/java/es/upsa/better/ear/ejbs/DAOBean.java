@@ -75,7 +75,7 @@ public class DAOBean implements DAO
                 {
                   
                     idSemetre = rs1.getString(1);
-                    Date a=rs1.getDate(4);
+                    
                     //Compruebo si debo buscar en examenes
                     if(currentFecha.compareTo(rs1.getDate(4))>=0 /*&& currentFecha.compareTo(rs1.getDate(5))<=0*/)
                     {/* x>0 despues, x=0 eq, x<0 antes*/
@@ -261,7 +261,7 @@ public class DAOBean implements DAO
         ArrayList<Asignatura> asigSemMatriculadas = new ArrayList();
         
         try(/*selecciono asignaturas matriculadas en ese semestre*/    
-            PreparedStatement psSeAsig = connection.prepareStatement("SELECT NOMBREASIGNATURA, IDASIG"
+            PreparedStatement psSeAsig = connection.prepareStatement("SELECT NOMBREASIGNATURA, IDASIG, CURSO"
                                                                   + "   FROM ASIGNATURAS"
                                                                   + "  WHERE IDASIG=? AND IDSEMESTRE=?");
             )
@@ -277,7 +277,7 @@ public class DAOBean implements DAO
                 {
                     if(rsAsig.next())
                     {/*obtengo las asignaturas en las que esta matriculado este semestre*/
-                        asigSemMatriculadas.add(new Asignatura(rsAsig.getString(2), rsAsig.getString(1)));
+                        asigSemMatriculadas.add(new Asignatura(rsAsig.getString(2), rsAsig.getString(1), rsAsig.getString(3)));
                     }//ya tengo todas las asignaturas de este cuatrimestre
                 }
             }
@@ -302,6 +302,7 @@ public class DAOBean implements DAO
                 idAsig = asig.getIdAsig();  
                                 
                 CeldaHorario celda = new CeldaHorario();
+                celda.setCurso(asig.getCurso());
                 psSExam.clearParameters();
                 psSExam.setString(1, idAsig);
                 psSExam.setDate(2, currentFecha);
@@ -356,10 +357,7 @@ public class DAOBean implements DAO
             for(Asignatura asig :asigSemMatriculadas )
             {                   
                 idAsig = asig.getIdAsig();
-                
-                /*pasar a minusculas toLowerCase(); java*/
-                        /*pasar a minusculas lower()        SQL*/
-                                                
+                                  
                 psHorario.clearParameters();
                 psHorario.setString(1, diaSemana);
                 psHorario.setString(2, asig.getIdAsig());
@@ -376,7 +374,7 @@ public class DAOBean implements DAO
                             celda.setTipoAsig(rsHorario.getString(2));
                             idAula=rsHorario.getString(3);
                             hora = rsHorario.getString(1);
-
+                            celda.setCurso(asig.getCurso());
                             /*ESA HORA HA SIDO CANCELADA???*/
                             psHCancel.setString(1, hora);
                             psHCancel.setString(3, idAsig);
