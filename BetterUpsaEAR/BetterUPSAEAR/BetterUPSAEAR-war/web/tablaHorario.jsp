@@ -21,12 +21,18 @@
         <div id="contenido">
             <div class="tabla">
               <h1>Bienvenid@ ${horario.nombreUsuario}</h1>  
+              
+              <c:if test="${horario.examen=='true'}">
+                  <h2>EXAMENES</h2>
+              </c:if>
              <table>
                 <thead>
                     <tr>
                         <th>Hora</th>
-                        <th>Asignatura</th>
-                        <th>Profesor</th>
+                        <th>Asignatura</th>  
+                        <c:if test="${horario.alumno=='true'}">
+                            <th>Profesor</th>
+                        </c:if>
                         <th>Aula</th>
                     </tr>
                 </thead>
@@ -35,22 +41,28 @@
                         <tr>
                             <td class='${celda.modificacion}'>  
                                 ${celda.hora}</td>
-                            <td class='${celda.modificacion}'>                            
-                                <c:if test="${celda.modificacion}=='cancelada'">
-                                    <b> CANCELADA:  </b>
-                                </c:if>
-                                <c:if test="${celda.modificacion}=='recuperada'">
-                                     Recuperacion: 
-                                </c:if>
-                                <span class="canceladaRecuperacion">${celda.modificacion}<br/></span>
+                            <td class='${celda.modificacion}'>                                                            
                                 ${celda.nombreAsignatura}
+                                <span class="canceladaRecuperacion"><br/>${celda.modificacion}</span>
                             </td>
-                            <td class='${celda.modificacion}'>  
-                                <p>${celda.profesor.nombre} ${celda.profesor.apellidos}</p>
-                                <p>${celda.profesor.email}</p>
-                            <td class='${celda.modificacion}'>  
-                            <td class='${celda.modificacion}'>  
-                                ${celda.infoAula.nombreAula}      ${celda.infoAula.edificio}</td>
+                            <c:if test="${horario.alumno=='true'}">
+                                <td class='${celda.modificacion}'>  
+                                    <p><b>${celda.profesor.nombre} ${celda.profesor.apellidos}</b></p>
+                                    <p>${celda.profesor.email}</p>
+                                </td>
+                            </c:if>
+                            <td class='${celda.modificacion}'>
+                                <c:if test="${horario.alumno=='false'}">
+                                    <br>
+                                    <div class="tabulador">
+                                        <br>
+                                    </div>
+                                </c:if>
+                                ${celda.infoAula.nombreAula}   ${celda.infoAula.edificio}
+                                <c:if test="${horario.alumno=='false'}">
+                                    <br><br><br>
+                                </c:if>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>

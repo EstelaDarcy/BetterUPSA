@@ -16,6 +16,24 @@ public class Horario
 {
     ArrayList<CeldaHorario> horario = new ArrayList();
     private String nombreUsuario;
+    private boolean examen;
+    private boolean alumno;
+
+    public boolean isAlumno() {
+        return alumno;
+    }
+
+    public void setAlumno(boolean alumno) {
+        this.alumno = alumno;
+    }
+
+    public boolean isExamen() {
+        return examen;
+    }
+
+    public void setExamen(boolean examen) {
+        this.examen = examen;
+    }
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -46,7 +64,16 @@ public class Horario
     {
         CeldaHorario vacio = new CeldaHorario();
         
-        vacio.setNombreAsignatura("NO IENES CLASE HOY ");
+        vacio.setNombreAsignatura("NO TIENES CLASE HOY ");
+        
+        horario.add(vacio);        
+    }
+    
+    public void addExamenVacio()
+    {
+        CeldaHorario vacio = new CeldaHorario();
+        
+        vacio.setNombreAsignatura("NO TIENES NINGÚN EXAMEN HOY ");
         
         horario.add(vacio);        
     }

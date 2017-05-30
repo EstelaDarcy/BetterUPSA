@@ -9,7 +9,16 @@ body{
   
 }
 
+tabulador{
+    font-size: 1px;
+}
+
+h2{
+    text-align: center;
+}
+
 h1 {
+    font-family: fantasy ;
     margin-left: 2em;
 }
 
@@ -50,9 +59,11 @@ Cancelaciones y Recuperaciones
 */
 .cancelada {
     background-color: #F00;
+    color: #FFF;
 }
 .recuperada {
-    background-color: #0F0;
+    background-color: #0C0;
+    color: #FFF;
 }
 .canceladaRecuperacion{
     text-transform: uppercase;

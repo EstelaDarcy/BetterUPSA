@@ -58,15 +58,15 @@ public class HorariosResource
     public Horario getHorario(@PathParam("id") String id) throws GeneralException 
     {
         Usuario usuario = logic.findUsuario(id);
-//        if(usuario instanceof Profesor)
-//        {
-//            Horario horario = logic.findHorarioProf(usuario);
-//            return horario;
+        if(usuario instanceof Profesor)
+        {
+            Horario horario = logic.findHorarioProf(usuario);
+            return horario;
         
-//        }else{
+        }else{
             Horario horario = logic.findHorario(usuario);
             return horario;
-//        }              
+        }              
     }
 
 }

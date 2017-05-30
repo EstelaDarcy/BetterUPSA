@@ -19,6 +19,15 @@ public class CeldaHorario
     private Profesor profesor;    
     private String tipoAsig;    
     private Aula infoAula;
+    private String curso;
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
 
     public Aula getInfoAula() {
         return infoAula;

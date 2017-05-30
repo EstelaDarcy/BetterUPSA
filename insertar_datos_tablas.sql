@@ -5,7 +5,7 @@ insert into titulaciones(idTitulacion,                nombreTit, idFacultad, num
 				  values(			1, 'Ingenieria Informatica',          1,         4, 'grado');
 
 insert into semestres (idSemestre, fechaIniClase, fechaFinClase, fechaIniExam, fechaFinExam)
-			   values (         5,  '30-01-2017',  '20-05-2017', '02-06-2017', '20-06-2017');
+			   values (         5,  '30-01-2017',  '20-05-2017', '21-05-2017', '20-06-2017');
 
 insert into asignaturas(idAsig, curso, 				 nombreAsignatura, idSemestre, idTitulacion)
 				 values(     1,     4,  'Etica y Derecho Informatico',          5,            1);
@@ -104,3 +104,6 @@ insert into impartidas(idProf, idAsig,   teoria,     fechaIni,      fechaFin)
 
 insert into impartidas(idProf, idAsig,     teoria,     fechaIni,      fechaFin)
 				values(     6,      2, 'practica', '30-01-2017',  '20-05-2017');
+
+insert into impartidas(idProf, idAsig,     teoria,     fechaIni,      fechaFin)
+				values(     4,      3, 'teoria', '30-01-2017',  '20-05-2017');
