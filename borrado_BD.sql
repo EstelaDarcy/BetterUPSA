@@ -1,0 +1,14 @@
+DROP TABLE cambiost;
+DROP TABLE impartidas;
+DROP TABLE tutorias;
+DROP TABLE profesores;
+DROP TABLE cambiosHora;
+DROP TABLE horarios;
+DROP TABLE aulas;
+DROP TABLE examenes;
+DROP TABLE matriculas;
+DROP TABLE alumnos;
+DROP TABLE asignaturas;
+DROP TABLE semestres;
+DROP TABLE titulaciones;
+DROP TABLE facultades;

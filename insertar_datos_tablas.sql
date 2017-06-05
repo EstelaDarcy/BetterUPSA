@@ -26,6 +26,10 @@ insert into examenes(idExam, idAsig,    fechaExam, horaExam, idAula,   teoria)
 		 	  values(	  1,      1, '02-06-2017',  '10:00',      1, 'teoria');
 
 insert into examenes(idExam, idAsig,    fechaExam, horaExam, idAula,   teoria)
+		 	  values(	  7,      1, '30-05-2017',  '10:00',      1, 'teoria');
+
+
+insert into examenes(idExam, idAsig,    fechaExam, horaExam, idAula,   teoria)
 		 	  values(	  2,      2, '09-06-2017',  '09:00',      2, 'teoria');
 
 insert into examenes(idExam, idAsig,    fechaExam, horaExam, idAula,     teoria)

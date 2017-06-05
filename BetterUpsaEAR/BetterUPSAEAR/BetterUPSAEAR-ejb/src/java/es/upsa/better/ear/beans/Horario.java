@@ -5,6 +5,7 @@
  */
 package es.upsa.better.ear.beans;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -18,6 +19,24 @@ public class Horario
     private String nombreUsuario;
     private boolean examen;
     private boolean alumno;
+    private Date currentHora;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Date getCurrentHora() {
+        return currentHora;
+    }
+
+    public void setCurrentHora(Date currentHora) {
+        this.currentHora = currentHora;
+    }
 
     public boolean isAlumno() {
         return alumno;

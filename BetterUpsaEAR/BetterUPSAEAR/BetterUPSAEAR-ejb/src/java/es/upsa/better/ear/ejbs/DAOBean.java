@@ -25,6 +25,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +58,10 @@ public class DAOBean implements DAO
         boolean examenes=false;
         String diaSemana;        
         
-        horario.setNombreUsuario(usuario.getNombre());
+        horario.setNombreUsuario(usuario.getNombre() + " " + usuario.getApellidos());
+        horario.setCurrentHora(currentFecha);
+        horario.setId(usuario.getIdentificador());
+        
         horario.setAlumno(true);
         diaSemana = getDayOfTheWeek(currentFecha); //obengo en qué dia de la semana estoy
         
@@ -104,6 +109,14 @@ public class DAOBean implements DAO
 //        //horario.setHorario(clases);
         if(!clases.isEmpty())
         {
+            Collections.sort(clases, new Comparator<CeldaHorario>() 
+            {
+                @Override
+                public int compare(CeldaHorario t, CeldaHorario t1) 
+                {
+                    return t.getHora().compareTo(t1.getHora());                    
+                }
+            });
             //horario.getHorario().addAll(clases);
             horario.addCeldas(clases);            
         }else
@@ -135,17 +148,18 @@ public class DAOBean implements DAO
             case 2:
                 diaSemana = "lunes";                               
                 break;
-            case 3:
+            case 3:                
                 diaSemana = "martes";
                 break;
             case 4:
                 diaSemana = "miercoles";
                 break;
-            case 5:
+            case 5:                        
                 diaSemana = "jueves";
                 break;
             case 6:
-                diaSemana = "viernes";
+                diaSemana = "miercoles";
+                //diaSemana = "viernes";
                 break;
             case 7:
                 diaSemana = "sabado";                
@@ -177,8 +191,7 @@ public class DAOBean implements DAO
                     aula.setEdificio(rsAula.getString(2));
                 }
             }
-        }
-        
+        }        
         return aula;
     }
     
@@ -281,8 +294,7 @@ public class DAOBean implements DAO
                     }//ya tengo todas las asignaturas de este cuatrimestre
                 }
             }
-        }
-        
+        }        
         return asigSemMatriculadas;
     }
     
@@ -314,8 +326,8 @@ public class DAOBean implements DAO
                         idAula = rsDia.getString(1);
                         celda.setNombreAsignatura(asig.getNombreAsig());
                         celda.setHora(rsDia.getString(2));
-                        celda.setTipoAsig(rsDia.getString(rsDia.getString(3)));
-                        celda.setModificacion("");
+                        celda.setTipoAsig(rsDia.getString(3));
+                        //celda.setModificacion("");
 
                         //Hay que sacar los datos del aula                    
                         Aula aula = getInfoAula(idAula, connection);
@@ -417,6 +429,7 @@ public class DAOBean implements DAO
                             CeldaHorario celda = new CeldaHorario();
                             celda.setNombreAsignatura(asig.getNombreAsig());
                             celda.setHora(rsAdd.getString(1));
+                            celda.setCurso(asig.getCurso());
                             celda.setTipoAsig(rsAdd.getString(2));
                             idAula=rsAdd.getString(3);     
                             celda.setModificacion("recuperada");
@@ -520,19 +533,23 @@ public class DAOBean implements DAO
                     }                        
                 }                
             }
-            horario.setNombreUsuario(usuario.getNombre());
-            asignaturasImpartidas = getAsigImpartidas(connection, idSemetre, currentFecha);
+            horario.setNombreUsuario(usuario.getNombre()+ " " + usuario.getApellidos());
+            asignaturasImpartidas = getAsigImpartidas(connection, usuario.getIdentificador(), currentFecha);
             asigSemMatriculadas = getAsigProf(connection, asignaturasImpartidas, idSemetre);
             //Array de AsigProf
             horario.setAlumno(false);
             horario.setExamen(examenes);
+            horario.setCurrentHora(currentFecha);
+            horario.setId(usuario.getIdentificador());
+            
             if(examenes==true)
             {
                 clases = getInfoExamenProf(connection, asigSemMatriculadas, currentFecha);                                               
             }else{/*ES HORARIO NORMAL*/    
                 clases = getInfoClasesProf(connection, asigSemMatriculadas, currentFecha, diaSemana);                
-            }
+            }       
             
+            clases = getTutorias(usuario.getIdentificador(), diaSemana, connection, clases);
         } catch (SQLException ex) {
             Logger.getLogger(DAOBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -540,6 +557,14 @@ public class DAOBean implements DAO
         if(!clases.isEmpty())
         {
             //horario.getHorario().addAll(clases);
+            Collections.sort(clases, new Comparator<CeldaHorario>() 
+            {
+                @Override
+                public int compare(CeldaHorario t, CeldaHorario t1) 
+                {
+                    return t.getHora().compareTo(t1.getHora());                    
+                }
+            });
             horario.addCeldas(clases);            
         }else
         {
@@ -550,8 +575,7 @@ public class DAOBean implements DAO
             {
                 horario.addVacio();
             }            
-        }  
-        
+        }         
         return horario;
     }    
     
@@ -587,9 +611,53 @@ public class DAOBean implements DAO
     }
     
     //LAS TUTORIAS DE ESA SEMANA DE ESE PROFESOR
-    public void getTutorias()
+    public ArrayList<CeldaHorario> getTutorias(String idProf, String diaSemana, Connection connection, ArrayList<CeldaHorario> clases) throws SQLException
     {
-        
+        String idT;
+        String idAula;
+        try( /*selecciono las tutorias del dia*/
+            PreparedStatement psTutoria = connection.prepareStatement("SELECT IDT, HORAT, DESPACHO "
+                                                                    + "  FROM TUTORIAS "
+                                                                    + " WHERE LOWER(DIASEMANA)=? AND IDPROF=?");
+            /*PreparedStatement psCambioTutoria = connection.prepareStatement("SELECT HORANUEVA, TIPO"
+                                                                          + "  FROM CAMBIOST "
+                                                                          + " WHERE IDT=? AND IDPROF=? AND DIANUEVO=?");
+            PreparedStatement psTutoriaAnadida = connection.prepareStatement("SELECT HORANUEVA, DIANUEVO, TIPO"
+                                                                           + "  FROM CAMBIOST "
+                                                                           + " WHERE IDPROF=?");*/
+                )
+        {
+            psTutoria.setString(1, diaSemana);
+            psTutoria.setString(2, idProf);
+            
+            try(ResultSet rsTutoria = psTutoria.executeQuery())
+            {
+                while(rsTutoria.next())
+                {
+                    CeldaHorario celda = new CeldaHorario();
+                    
+                    idT = rsTutoria.getString(1);
+                    celda.setHora(rsTutoria.getString(2));
+                    idAula = rsTutoria.getString(3);
+                    celda.setNombreAsignatura("Tutoría");                    
+                    celda.setTipoAsig("tutoria");
+                    
+//                    psCambioTutoria.setString(1, idT);
+//                    psCambioTutoria.setString(2, idProf);
+//                    psCambioTutoria.setString(3, diaSemana);
+//                    try(ResultSet rsCambioT = psCambioTutoria.executeQuery())
+//                    {
+//                        
+//                    }
+                        
+                    Aula aula = getInfoAula(idAula, connection);
+                    celda.setInfoAula(aula); 
+                    
+                    clases.add(celda);
+                }
+            }
+        }
+        return clases;                
     }
     
     //LAS ASIGNATURAS QUE TENDRA EL PROFESOR EN SU HORARIO
@@ -664,23 +732,19 @@ public class DAOBean implements DAO
                         Aula aula = getInfoAula(idAula, connection);
                         celda.setInfoAula(aula);
 
-                        //obtener id prof con id asignatura
-                        Profesor profesor = null;
-
                         clases.add(celda);
                     }
                 }
             }
-        } 
-        
+        }         
         return clases;
     }
     
     public ArrayList<CeldaHorario> getInfoClasesProf(Connection connection, ArrayList<AsigProf> asigSemMatriculadas, Date currentFecha, String diaSemana) throws SQLException
-    {
-        String idAsig, idAula;
-        String hora;  
+    {         
         ArrayList<CeldaHorario> clases = new ArrayList();
+        String idAsig, idAula;
+        String hora; 
     
         try( /*selecciono las clases del dia*/
             PreparedStatement psHorario = connection.prepareStatement("SELECT HORA, IDAULA "
@@ -693,7 +757,7 @@ public class DAOBean implements DAO
             /*Compruebo si hoy tiene alguna clase extra*/    
             PreparedStatement psHAnnadida = connection.prepareStatement("SELECT HORANUEVA, IDAULA "
                                                                       + "  FROM CAMBIOSHORA "
-                                                                      + " WHERE IDASIG=? AND FECHANUEVA=? AND LOWER(TIPO)='recuperada', TEORIA=?");               
+                                                                      + " WHERE IDASIG=? AND FECHANUEVA=? AND LOWER(TIPO)='recuperada' AND TEORIA=?");               
             )
         {
             for(AsigProf asig :asigSemMatriculadas )
@@ -715,7 +779,7 @@ public class DAOBean implements DAO
                             celda.setNombreAsignatura(asig.getNombreAsig());
                             celda.setHora(rsHorario.getString(1));
                             celda.setTipoAsig(asig.getTeoria());
-                            idAula=rsHorario.getString(3);
+                            idAula=rsHorario.getString(2);
                             hora = rsHorario.getString(1);
 
                             /*ESA HORA HA SIDO CANCELADA???*/
@@ -744,13 +808,11 @@ public class DAOBean implements DAO
                         }while(rsHorario.next());
                     }
                 }
-
                 psHAnnadida.clearParameters();
                 psHAnnadida.setString(1, asig.getIdAsig());
                 psHAnnadida.setDate(2, currentFecha);
                 psHAnnadida.setString(3, asig.getTeoria());
                 
-
                 //Compruebo si hay alguna asignatura que se recupere
                 try(ResultSet rsAdd = psHAnnadida.executeQuery())
                 {
