@@ -158,8 +158,7 @@ public class DAOBean implements DAO
                 diaSemana = "jueves";
                 break;
             case 6:
-                diaSemana = "miercoles";
-                //diaSemana = "viernes";
+                diaSemana = "viernes";
                 break;
             case 7:
                 diaSemana = "sabado";                
@@ -774,7 +773,7 @@ public class DAOBean implements DAO
                     if(rsHorario.next())
                     {//PUEDE HABER VARIAS UNA ASIGNTURA EN VARIAS HORAS EL MISMO DIA
                         do
-                        {   
+                        {//   celda de horario muestra informacion de cada dia 
                             CeldaHorario celda = new CeldaHorario();
                             celda.setNombreAsignatura(asig.getNombreAsig());
                             celda.setHora(rsHorario.getString(1));

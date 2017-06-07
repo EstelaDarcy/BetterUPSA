@@ -51,16 +51,16 @@ insert into alumnos(expediente,  nombreAl,     apellidosAl)
 			 values(       321,  'Manolo', 'Perez Sanchez');
 
 insert into examenes(idExam, idAsig,    fechaExam, horaExam, idAula,     teoria)
-		 	  values(	  1,      1, '02-06-2017',  '11:00',      1, 'practica');
+		 	  values(	  1,      1, '07-06-2017',  '11:00',      1, 'practica');
 
 insert into examenes(idExam, idAsig,    fechaExam, horaExam, idAula,     teoria)
-		 	  values(	  2,      6, '02-06-2017',  '09:00',      1, 'practica');
+		 	  values(	  2,      6, '07-06-2017',  '09:00',      1, 'practica');
 
 insert into examenes(idExam, idAsig,    fechaExam, horaExam, idAula,     teoria)
-		 	  values(	  3,      5, '02-06-2017',  '16:00',      1, 'practica');
+		 	  values(	  3,      5, '07-06-2017',  '16:00',      1, 'practica');
 
 insert into examenes(idExam, idAsig,    fechaExam, horaExam, idAula,     teoria)
-		 	  values(	  4,      2, '02-06-2017',  '11:00',      1, 'practica');
+		 	  values(	  4,      2, '07-06-2017',  '11:00',      1, 'practica');
 
 insert into matriculas(expediente, idAsig)
 				values(       123,      1);

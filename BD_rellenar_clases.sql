@@ -80,10 +80,10 @@ insert into horarios(        dia,    hora,     teoria, idAsig, idAula)
 
 
 insert into cambiosHora(  fechaNueva, horaNueva,        tipo, idAula, idAsig,     teoria)
-				 values('02-06-2017',    '10:00', 'cancelada',      3,      6, 'practica');
+				 values('07-06-2017',    '10:00', 'cancelada',      3,      6, 'practica');
 
 insert into cambiosHora(  fechaNueva, horaNueva,         tipo, idAula, idAsig,     teoria)
-				 values('02-06-2017',   '13:00', 'recuperada',      2,      1, 'practica');
+				 values('07-06-2017',   '13:00', 'recuperada',      2,      1, 'practica');
 				 
 
 
